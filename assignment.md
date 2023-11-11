@@ -4,7 +4,7 @@ Your task is to construct a component implementing the logic of board game AZUL.
 
 ## Design
 
-I prepared a <img src="images/design.png" alt="Design" width="250" height="250"/> template for your implementation. The interaction with the game consists of a single `take` call that both specifies from where and which the tiles should be taken and where to put them. Incorrect tile description should yield false return value and do nothing. Incorrect destination description should result in tiles falling to the floor (Note that this simplifies the design a lot, otherwise TableArea needs to handle "undos" or something similar). To see how to use this component to create a working game see [this diagram](img/architecture.pdf) depicting possible such architecture.
+I prepared a <img src="img/design.png" alt="Design" width="250" height="250"/> template for your implementation. The interaction with the game consists of a single `take` call that both specifies from where and which the tiles should be taken and where to put them. Incorrect tile description should yield false return value and do nothing. Incorrect destination description should result in tiles falling to the floor (Note that this simplifies the design a lot, otherwise TableArea needs to handle "undos" or something similar). To see how to use this component to create a working game see [this diagram](img/architecture.pdf) depicting possible such architecture.
 
 Note that the design is by no means complete. Most notably
 - You have to add appropriate constructors. Chose your constructors in a way that enables good testing. E.g., it is a good idea to allow creating WallLines that already have some stones on it.
