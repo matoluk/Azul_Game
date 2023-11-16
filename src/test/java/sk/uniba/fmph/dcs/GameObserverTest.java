@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 class FakeObserver implements ObserverInterface {
-    private String state;
+    private String state = null;
     @Override
     public void notify(String state){
         this.state = state;
@@ -15,20 +15,18 @@ class FakeObserver implements ObserverInterface {
     }
 }
 public class GameObserverTest {
+    FakeObserver observer1, observer2, observer3;
+    GameObserver gameObserver;
 
     @Before
     public void setUp(){
+        observer1 = new FakeObserver();
+        observer2 = new FakeObserver();
+        observer3 = new FakeObserver();
+        gameObserver = new GameObserver();
     }
 
     @Test
-    public void notifyEverybody() {
-    }
-
-    @Test
-    public void registerObserver() {
-    }
-
-    @Test
-    public void cancelObserver() {
+    public void testObserver() {
     }
 }
