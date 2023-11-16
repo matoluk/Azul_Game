@@ -36,6 +36,13 @@ public class Board implements BoardInterface{
         }
     }
 
+    private Optional<Tile>[][] getWall(){
+        Optional<Tile>[][] wall = new Optional[countColours][];
+        for (int i = 0; i < countColours; i++)
+            wall[i] = wallLines[i].getTiles();
+        return wall;
+    }
+
     @Override
     public void put(int destinationIdx, Tile[] tiles) {
         patternLines[destinationIdx].put(tiles);
@@ -48,22 +55,13 @@ public class Board implements BoardInterface{
         newPoints -= floor.finishRound().getValue();
         points = new Points(newPoints);
 
-        Optional<Tile>[][] wall = new Optional[countColours][countColours];
-        for (int i = 0; i < countColours; i++){
-            Optional<Tile>[] wallLine = wallLines[i].getTiles();
-            for (int j = 0; j < countColours; j++)
-                wall[i][j] = wallLine[j];
-        }
-
-        FinishRoundResult result = GameFinished.gameFinished(wall);
-        if (result == FinishRoundResult.GAME_FINISHED)
-            points = new Points(points.getValue() + FinalPointsCalculation.getPoints(wall).getValue());
-        return result;
+        return GameFinished.gameFinished(getWall());
     }
 
     @Override
     public void endGame() {
-
+        Points finalPoints = FinalPointsCalculation.getPoints(getWall());
+        points = new Points(points.getValue() + finalPoints.getValue());
     }
 
     @Override
