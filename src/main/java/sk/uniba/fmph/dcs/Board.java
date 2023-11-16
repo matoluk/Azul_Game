@@ -10,15 +10,15 @@ public class Board implements BoardInterface{
     private WallLine[] wallLines;
     private Floor floor;
 
-    public Board(final ArrayList<Points> pointPattern){
+    public Board(UsedTilesGiveInterface usedTiles,final ArrayList<Points> pointPattern){
         points = new Points(0);
         countColours = Tile.values().length - 1;
         patternLines = new PatternLine[countColours];
         wallLines = new WallLine[countColours];
-        floor = new Floor(new UsedTiles(), pointPattern);
+        floor = new Floor(usedTiles, pointPattern);
 
         for (int i = 0; i < countColours; i++){
-            patternLines[i] = new PatternLine(i+1);
+            patternLines[i] = new PatternLine(i+1, usedTiles, floor, wallLines[i]);
 
             Tile[] tiles = new Tile[countColours];
             int j = i;
@@ -30,7 +30,9 @@ public class Board implements BoardInterface{
                         j = 0;
                 }
             }
-            wallLines[i] = new WallLine(tiles);
+            WallLine lineUp = (i > 0 ? wallLines[i-1] : null);
+            WallLine lineDown = (i < countColours - 1 ? wallLines[i+1] : null);
+            wallLines[i] = new WallLine(tiles, lineUp, lineDown);
         }
     }
 
