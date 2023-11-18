@@ -3,7 +3,7 @@ package sk.uniba.fmph.dcs;
 import java.util.*;
 
 public class UsedTiles {
-    private List<Tile> usedTiles; //List to hold used tiles
+    private final List<Tile> usedTiles; //List to hold used tiles
 
     public UsedTiles() {
         this.usedTiles = new ArrayList<>();
