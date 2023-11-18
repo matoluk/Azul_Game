@@ -21,7 +21,7 @@ public class FullColorRule implements ScoringRule{
                 }
             }
             if (inOneColor == wall.length) {
-                sum += 10;
+                sum += EndGameScoringConstants.FULL_COLOR_SET_POINTS;
             }
         }
         return sum;

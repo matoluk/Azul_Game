@@ -15,7 +15,7 @@ public class VerticalLineRule implements ScoringRule{
                 }
             }
             if(complete){
-                sum += 7;
+                sum += EndGameScoringConstants.VERTICAL_LINE_POINTS;
             }
             complete = true;
         }

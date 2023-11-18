@@ -15,7 +15,7 @@ public class HorizontalLineRule implements ScoringRule{
                 }
             }
             if(complete){
-                sum += 2;
+                sum += EndGameScoringConstants.HORIZONTAL_LINE_POINTS;
             }
             complete = true;
         }
