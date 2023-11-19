@@ -5,14 +5,20 @@ import java.util.Optional;
 
 public class Board implements BoardInterface{
     public Points points;
-    private int countColours;
     private PatternLine[] patternLines;
     private WallLine[] wallLines;
     private Floor floor;
 
+    public Board(PatternLine[] patternLines, WallLine[] wallLines, Floor floor){
+        points = new Points(0);
+        this.patternLines = patternLines;
+        this.wallLines = wallLines;
+        this.floor = floor;
+    }
+
     public Board(UsedTilesGiveInterface usedTiles,final ArrayList<Points> pointPattern){
         points = new Points(0);
-        countColours = Tile.values().length - 1;
+        int countColours = Tile.values().length - 1;
         patternLines = new PatternLine[countColours];
         wallLines = new WallLine[countColours];
         floor = new Floor(usedTiles, pointPattern);
@@ -37,8 +43,8 @@ public class Board implements BoardInterface{
     }
 
     private Optional<Tile>[][] getWall(){
-        Optional<Tile>[][] wall = new Optional[countColours][];
-        for (int i = 0; i < countColours; i++)
+        Optional<Tile>[][] wall = new Optional[wallLines.length][];
+        for (int i = 0; i < wall.length; i++)
             wall[i] = wallLines[i].getTiles();
         return wall;
     }
@@ -69,8 +75,8 @@ public class Board implements BoardInterface{
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(points).append("\n");
 
-        int length = patternLines[countColours - 1].state().length();
-        for (int i = 0; i < countColours; i++) {
+        int length = patternLines[patternLines.length - 1].state().length();
+        for (int i = 0; i < patternLines.length; i++){
             String alignedPatternLine = patternLines[i].state();
             int spaces = length - alignedPatternLine.length();
             alignedPatternLine = alignedPatternLine + " ".repeat(spaces);
