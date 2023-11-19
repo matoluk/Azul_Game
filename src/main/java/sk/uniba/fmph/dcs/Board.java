@@ -16,32 +16,6 @@ public class Board implements BoardInterface{
         this.floor = floor;
     }
 
-    public Board(UsedTilesGiveInterface usedTiles,final ArrayList<Points> pointPattern){
-        points = new Points(0);
-        int countColours = Tile.values().length - 1;
-        patternLines = new PatternLine[countColours];
-        wallLines = new WallLine[countColours];
-        floor = new Floor(usedTiles, pointPattern);
-
-        for (int i = 0; i < countColours; i++){
-            patternLines[i] = new PatternLine(i+1, usedTiles, floor, wallLines[i]);
-
-            Tile[] tiles = new Tile[countColours];
-            int j = i;
-            for (Tile tile : Tile.values()){
-                if (tile != Tile.STARTING_PLAYER){
-                    tiles[j] = tile;
-                    j++;
-                    if (j >= countColours)
-                        j = 0;
-                }
-            }
-            WallLine lineUp = (i > 0 ? wallLines[i-1] : null);
-            WallLine lineDown = (i < countColours - 1 ? wallLines[i+1] : null);
-            wallLines[i] = new WallLine(tiles, lineUp, lineDown);
-        }
-    }
-
     private Optional<Tile>[][] getWall(){
         Optional<Tile>[][] wall = new Optional[wallLines.length][];
         for (int i = 0; i < wall.length; i++)
