@@ -5,11 +5,11 @@ import java.util.Optional;
 
 public class Board implements BoardInterface{
     public Points points;
-    private PatternLine[] patternLines;
-    private WallLine[] wallLines;
-    private Floor floor;
+    private PatternLineInterface[] patternLines;
+    private WallLineInterface[] wallLines;
+    private FloorInterface floor;
 
-    public Board(PatternLine[] patternLines, WallLine[] wallLines, Floor floor){
+    public Board(PatternLineInterface[] patternLines, WallLineInterface[] wallLines, FloorInterface floor){
         points = new Points(0);
         this.patternLines = patternLines;
         this.wallLines = wallLines;
@@ -57,7 +57,8 @@ public class Board implements BoardInterface{
     @Override
     public FinishRoundResult finishRound() {
         int newPoints = points.getValue();
-        newPoints += patternLines.finishRound().getValue();
+        for (int i = 0; i < patternLines.length; i++)
+            newPoints += patternLines[i].finishRound().getValue();
         newPoints -= floor.finishRound().getValue();
         points = new Points(newPoints);
 
