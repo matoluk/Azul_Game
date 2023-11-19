@@ -66,19 +66,18 @@ public class Board implements BoardInterface{
 
     @Override
     public String state() {
-        String toReturn = points.toString() + "\n";
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(points).append("\n");
 
         int length = patternLines[countColours - 1].state().length();
-        for (int i = 0; i < countColours; i++){
+        for (int i = 0; i < countColours; i++) {
             String alignedPatternLine = patternLines[i].state();
             int spaces = length - alignedPatternLine.length();
-            for (int j = 0; j < spaces; j++)
-                alignedPatternLine += " ";
-
-            toReturn += alignedPatternLine + " | " + wallLines[i].state() + "\n";
+            alignedPatternLine = alignedPatternLine + " ".repeat(spaces);
+            stringBuilder.append(alignedPatternLine).append(" | ").append(wallLines[i].state()).append("\n");
         }
 
-        toReturn += floor.state();
-        return toReturn;
+        stringBuilder.append(floor.state());
+        return stringBuilder.toString();
     }
 }
