@@ -1,11 +1,11 @@
 package sk.uniba.fmph.dcs;
 
 abstract class TyleSource {
-    abstract Tile[] take(int idx);
+    abstract public Tile[] take(int idx);
 
-    abstract boolean isEmpty();
+    abstract public boolean isEmpty();
 
-    abstract void startNewRound();
+    abstract public void startNewRound();
 
-    abstract String state();
+    abstract public String state();
 }
