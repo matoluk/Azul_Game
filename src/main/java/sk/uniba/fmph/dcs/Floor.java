@@ -3,7 +3,7 @@ package sk.uniba.fmph.dcs;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public final class Floor {
+public final class Floor implements FloorInterface {
   private final UsedTilesGiveInterface usedTiles;
   private final ArrayList<Points> pointPattern;
   private ArrayList<Tile> tiles;
