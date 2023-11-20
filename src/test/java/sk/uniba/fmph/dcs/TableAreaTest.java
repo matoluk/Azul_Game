@@ -1,5 +1,6 @@
 package sk.uniba.fmph.dcs;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -7,9 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Collection;
-
-
-
 
 
 public class TableAreaTest {
@@ -24,8 +22,10 @@ public class TableAreaTest {
         TableArea tableArea = new TableArea(new ArrayList<>(Collections.singletonList(tableCenter)));
 
         Tile[] takenTiles = tableArea.take(0, Tile.RED.ordinal());
-
-        assertEquals(tilesToAdd, takenTiles);
+        tilesToAdd = ArrayUtils.add(tilesToAdd,Tile.STARTING_PLAYER);
+        for (int i = 0; i < takenTiles.length; i++) {
+            assertEquals(tilesToAdd[i], takenTiles[i]);
+        }
         assertTrue(tableCenter.isEmpty());
     }
 
@@ -50,6 +50,9 @@ public class TableAreaTest {
         ArrayList<TyleSource> sources = new ArrayList<>(Arrays.asList(source1, source2));
         TableArea tableArea = new TableArea(sources);
 
+        assertFalse(tableArea.isRoundEnd());
+        tableArea.take(0, Tile.STARTING_PLAYER.ordinal());
+        tableArea.take(1, Tile.STARTING_PLAYER.ordinal());
         assertTrue(tableArea.isRoundEnd());
     }
 
@@ -74,6 +77,12 @@ public class TableAreaTest {
         TableArea tableArea = new TableArea(sources);
 
         tableArea.startNewRound();
+
+        assertFalse(source1.isEmpty());
+        assertFalse(source2.isEmpty());
+
+        tableArea.take(0, Tile.STARTING_PLAYER.ordinal());
+        tableArea.take(1, Tile.STARTING_PLAYER.ordinal());
 
         assertTrue(source1.isEmpty());
         assertTrue(source2.isEmpty());
