@@ -9,12 +9,18 @@ public class UsedTiles {
         this.usedTiles = new ArrayList<>();
     }
 
-    // Method to add an array of Tile objects to the usedTiles list.
+    // Method to add an array of Tile objects to the usedTiles list without STARTING_PLAYER tile.
     public void give(Tile[] tiles) {
         if (tiles == null) {
             throw new IllegalArgumentException("Cannot add null array of tiles.");
         }
-        this.usedTiles.addAll(Arrays.asList(tiles));
+        for (Tile tile : tiles) {
+            // Check if the current tile is the STARTING_PLAYER tile
+            if (tile == Tile.STARTING_PLAYER) {
+                continue;
+            }
+            this.usedTiles.add(tile);
+        }
     }
 
     // Method to retrieve and remove all Tile objects from the usedTiles list.

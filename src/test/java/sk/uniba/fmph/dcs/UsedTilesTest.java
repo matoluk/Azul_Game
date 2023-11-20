@@ -21,6 +21,21 @@ public class UsedTilesTest {
     }
 
     @Test
+    public void testIfSPTIsNotIn(){
+        Tile[] tiles = {Tile.STARTING_PLAYER, Tile.BLUE, Tile.GREEN};
+        usedTiles.give(tiles);
+        assertArrayEquals(new Tile[]{Tile.BLUE, Tile.GREEN}, usedTiles.takeAll());
+    }
+
+    @Test
+    public void testIfSPTIsNotInTwice(){
+        Tile[] tiles = {Tile.STARTING_PLAYER, Tile.BLUE, Tile.GREEN};
+        Tile[] tiles2x = {Tile.BLUE, Tile.GREEN, Tile.BLUE, Tile.GREEN};
+        usedTiles.give(tiles);
+        usedTiles.give(tiles);
+        assertArrayEquals(tiles2x, usedTiles.takeAll());
+    }
+    @Test
     public void testGiveEmptyArrayShouldThrowException() {
         Tile[] tiles = new Tile[0];
         usedTiles.give(tiles);
