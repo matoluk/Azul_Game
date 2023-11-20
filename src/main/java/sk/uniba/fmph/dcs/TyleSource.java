@@ -7,5 +7,5 @@ abstract class TyleSource {
 
     abstract void startNewRound();
 
-    abstract String string();
+    abstract String state();
 }
