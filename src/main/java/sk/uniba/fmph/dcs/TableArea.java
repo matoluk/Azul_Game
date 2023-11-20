@@ -7,15 +7,14 @@ public class TableArea {
     private ArrayList<TyleSource> tyleSources;
 
     public TableArea(ArrayList<TyleSource> tyleSources) {
-        this.tyleSource = tyleSources;
+        this.tyleSources = tyleSources;
     }
-    public Collection<Tile> take(int sourceIdx, int idx) {
+    public Tile[] take(int sourceIdx, int idx) {
         if (sourceIdx >= 0 && sourceIdx < tyleSources.size()) {
             TyleSource selectedSource = tyleSources.get(sourceIdx);
             return selectedSource.take(idx);
         } else {
-            // vrati prazdny list (namiesto exception alebo null)
-            return Collections.emptyList();
+            return new Tile[0];
         }
     }
 
