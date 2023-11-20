@@ -1,6 +1,5 @@
 package sk.uniba.fmph.dcs;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 public class Board implements BoardInterface{
