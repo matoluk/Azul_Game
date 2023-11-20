@@ -8,7 +8,7 @@ public class HorizontalLineRule implements ScoringRule{
         int sum = 0;
         boolean complete = true;
         for(int i = 0; i < wall.length; i++){
-            for(int j = 0; j < wall.length; j++){
+            for(int j = 0; j < wall[i].length; j++){
                 if(!wall[i][j].isPresent()){
                     complete = false;
                     break;
