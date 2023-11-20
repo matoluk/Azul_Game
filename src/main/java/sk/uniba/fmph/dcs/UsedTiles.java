@@ -25,9 +25,6 @@ public class UsedTiles {
 
     // Method to retrieve and remove all Tile objects from the usedTiles list.
     public Tile[] takeAll() {
-        if (this.usedTiles.isEmpty()) {
-            throw new NoSuchElementException("No tiles to take. The usedTiles list is empty.");
-        }
         Tile[] tilesArray = new Tile[this.usedTiles.size()];
         tilesArray = this.usedTiles.toArray(tilesArray);
         this.usedTiles.clear();

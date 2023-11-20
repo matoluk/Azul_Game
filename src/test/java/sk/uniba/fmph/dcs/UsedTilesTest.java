@@ -36,18 +36,12 @@ public class UsedTilesTest {
         assertArrayEquals(tiles2x, usedTiles.takeAll());
     }
     @Test
-    public void testGiveEmptyArrayShouldThrowException() {
+    public void testGiveEmptyArray() {
         Tile[] tiles = new Tile[0];
         usedTiles.give(tiles);
+        usedTiles.takeAll();
 
-        try {
-            usedTiles.takeAll();
-            fail("Expected NoSuchElementException to be thrown");
-        } catch (NoSuchElementException e) {
-            // Test passes if NoSuchElementException is caught
-            String expectedMessage = "No tiles to take. The usedTiles list is empty.";
-            assertEquals(expectedMessage, e.getMessage());
-        }
+        assertArrayEquals(tiles, usedTiles.takeAll());
     }
 
     @Test
