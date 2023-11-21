@@ -65,15 +65,22 @@ public class WallLine implements WallLineInterface{
                     p++;
                     i--;
                     k = 0;
+                    if(i < 0){
+                        break;
+                    }
                 }
             }
             if(idx != countColours - 1){
                 int i = idx + 1;
-                while(i <= countColours - 1  & currentWallLine[i] != null){
+                while(i <= countColours - 1 & currentWallLine[i] != null){
                     p++;
                     i++;
                     k = 0;
+                    if(i == countColours){
+                        break;
+                    }
                 }
+
             }
             if(lineDown != null){
                 Optional<Tile>[] down = lineDown.getTiles();
