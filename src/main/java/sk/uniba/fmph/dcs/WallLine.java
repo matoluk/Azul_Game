@@ -19,6 +19,18 @@ public class WallLine implements WallLineInterface{
         this.countColours = Tile.values().length - 1;
         this.currentWallLine = new Tile[countColours];
     }
+    public void setUp(WallLine line){
+        this.lineUp = line;
+    }
+    public void setDown(WallLine line){
+        this.lineDown = line;
+    }
+    public WallLine getUp(){
+        return lineUp;
+    }
+    public WallLine getDown(){
+        return lineDown;
+    }
 
     public boolean canPutTile(Tile tile) {
         int index = tiles.indexOf(tile);
@@ -67,28 +79,33 @@ public class WallLine implements WallLineInterface{
                 Optional<Tile>[] down = lineDown.getTiles();
                 if(down[idx].isPresent()){
                     p++;
-                    k = 1;
-                    p += columnDown(lineDown, idx, p);
+                    if(k == 0){
+                        p++;
+                        k = 1;
+                    }
+                    p = columnDown(lineDown, idx, p);
                 }
             }
             if(lineUp != null){
                 Optional<Tile>[] up = lineUp.getTiles();
                 if(up[idx].isPresent()){
+                    p++;
                     if(k == 0){
                         p++;
                     }
-                    p += columnUp(lineUp, idx, p);
+                    p = columnUp(lineUp, idx, p);
                 }
             }
+            return new Points(p);
         }
-        return new Points(p);
+        return null;
     }
     private int columnUp(WallLine wallLine, int idx, int p){
         if(wallLine.lineUp != null){
-            Optional<Tile>[] up = wallLine.lineUp.getTiles();
+            Optional<Tile>[] up = wallLine.getUp().getTiles();
             if(up[idx].isPresent()){
                 p++;
-                p = columnUp(wallLine.lineUp, idx, p);
+                p = columnUp(wallLine.getUp(), idx, p);
                 return p;
            }
             return p;
@@ -97,10 +114,10 @@ public class WallLine implements WallLineInterface{
     }
     private int columnDown(WallLine wallLine, int idx, int p){
         if(wallLine.lineDown != null){
-            Optional<Tile>[] down = wallLine.lineDown.getTiles();
+            Optional<Tile>[] down = wallLine.getDown().getTiles();
             if(down[idx].isPresent()){
                 p++;
-                p = columnDown(wallLine.lineDown, idx, p);
+                p = columnDown(wallLine.getDown(), idx, p);
                 return p;
             }
             return p;
