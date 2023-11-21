@@ -34,7 +34,7 @@ public class TableAreaTest {
     @Test
     public void testTakeInvalidSource() {
         TableCenter tableCenter = new TableCenter();
-        TableArea tableArea = new TableArea(new ArrayList<TyleSource>((Collection<? extends TyleSource>) tableCenter));
+        TableArea tableArea = new TableArea(new ArrayList<>(Collections.singletonList(tableCenter)));
 
         Tile[] takenTiles = tableArea.take(1, Tile.RED.ordinal());
 
