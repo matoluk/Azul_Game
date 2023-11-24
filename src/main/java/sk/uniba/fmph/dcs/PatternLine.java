@@ -71,6 +71,9 @@ public class PatternLine implements PatternLineInterface{
 
     @Override
     public String state() {
-        return null;
+        StringBuilder toReturn = new StringBuilder();
+        for (Tile tile : patternLine)
+            toReturn.append("["+tile+"]");
+        return toReturn.toString();
     }
 }
