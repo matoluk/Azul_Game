@@ -57,7 +57,16 @@ public class PatternLine implements PatternLineInterface{
 
     @Override
     public Points finishRound() {
-        return null;
+        Tile color = patternLine[patternLine.length - 1];
+        if (color == null)
+            return new Points(0);
+
+        ArrayList<Tile> toUsedTiles = new ArrayList<>(List.of(patternLine));
+        toUsedTiles.remove(toUsedTiles.size() - 1);
+        usedTiles.give(toUsedTiles);
+
+        Arrays.fill(patternLine, null);
+        return wallLine.putTile(color);
     }
 
     @Override
