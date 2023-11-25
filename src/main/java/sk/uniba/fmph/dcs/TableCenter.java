@@ -1,7 +1,6 @@
 package sk.uniba.fmph.dcs;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 public class TableCenter extends TileSource implements TableCenterAddInterface {
     @Override
@@ -11,7 +10,7 @@ public class TableCenter extends TileSource implements TableCenterAddInterface {
     }
 
     @Override
-    public void add(Tile[] newTiles) {
-        tiles.addAll(new ArrayList<>(Arrays.asList(newTiles)));
+    public void add(List<Tile> tiles) {
+        this.tiles.addAll(tiles);
     }
 }

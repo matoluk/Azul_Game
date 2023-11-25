@@ -12,9 +12,8 @@ public class Factory extends TileSource{
     @Override
     public Tile[] take(int idx){
         Tile[] toReturn = super.take(idx);
-        Tile[] toTableCenter = tiles.toArray(new Tile[tiles.size()]);
+        tableCenter.add(tiles);
         tiles.clear();
-        tableCenter.add(toTableCenter);
         return toReturn;
     }
     @Override

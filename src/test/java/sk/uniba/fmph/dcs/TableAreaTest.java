@@ -16,14 +16,17 @@ public class TableAreaTest {
     public void testTakeValidSource() {
 
         TableCenter tableCenter = new TableCenter();
-        Tile[] tilesToAdd = new Tile[]{Tile.RED, Tile.RED, Tile.RED};
-        tableCenter.add(tilesToAdd);
+        ArrayList<Tile> redRedRed = new ArrayList<>();
+        redRedRed.add(Tile.RED);
+        redRedRed.add(Tile.RED);
+        redRedRed.add(Tile.RED);
+        tableCenter.add(redRedRed);
         TableArea tableArea = new TableArea(new ArrayList<>(Collections.singletonList(tableCenter)));
 
         Tile[] takenTiles = tableArea.take(0, Tile.RED.ordinal());
-        tilesToAdd = ArrayUtils.add(tilesToAdd,Tile.STARTING_PLAYER);
-        for (int i = 0; i < takenTiles.length; i++) {
-            assertEquals(tilesToAdd[i], takenTiles[i]);
+        assertEquals(Tile.STARTING_PLAYER, takenTiles[0]);
+        for (int i = 1; i < takenTiles.length; i++) {
+            assertEquals(redRedRed.get(i-1), takenTiles[i]);
         }
         assertTrue(tableCenter.isEmpty());
     }
@@ -59,7 +62,9 @@ public class TableAreaTest {
     @Test
     public void testIsRoundEndNonEmptySources() {
         TableCenter tableCenter = new TableCenter();
-        tableCenter.add(new Tile[]{Tile.RED});
+        ArrayList<Tile> red = new ArrayList<>();
+        red.add(Tile.RED);
+        tableCenter.add(red);
         TableArea tableArea = new TableArea(new ArrayList<>(Collections.singletonList(tableCenter)));
 
 
@@ -70,7 +75,11 @@ public class TableAreaTest {
     @Test
     public void testStartNewRound() {
         TableCenter source1 = new TableCenter();
-        source1.add(new Tile[]{Tile.RED, Tile.RED, Tile.RED});
+        ArrayList<Tile> redRedRed = new ArrayList<>();
+        redRedRed.add(Tile.RED);
+        redRedRed.add(Tile.RED);
+        redRedRed.add(Tile.RED);
+        source1.add(redRedRed);
         TableCenter source2 = new TableCenter();
         ArrayList<TileSource> sources = new ArrayList<>(Arrays.asList(source1, source2));
         TableArea tableArea = new TableArea(sources);
@@ -89,10 +98,19 @@ public class TableAreaTest {
 
     @Test
     public void testState() {
+        ArrayList<Tile> redBlackRed = new ArrayList<>();
+        redBlackRed.add(Tile.RED);
+        redBlackRed.add(Tile.BLACK);
+        redBlackRed.add(Tile.RED);
+        ArrayList<Tile> green3x = new ArrayList<>();
+        green3x.add(Tile.GREEN);
+        green3x.add(Tile.GREEN);
+        green3x.add(Tile.GREEN);
+
         TableCenter source1 = new TableCenter();
-        source1.add(new Tile[]{Tile.RED, Tile.BLACK, Tile.RED});
+        source1.add(redBlackRed);
         TableCenter source2 = new TableCenter();
-        source2.add(new Tile[]{Tile.GREEN, Tile.GREEN, Tile.GREEN});
+        source2.add(green3x);
         ArrayList<TileSource> sources = new ArrayList<>(Arrays.asList(source1, source2));
         TableArea tableArea = new TableArea(sources);
 
