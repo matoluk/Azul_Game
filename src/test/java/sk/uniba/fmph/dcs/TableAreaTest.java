@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Collection;
 
 
 public class TableAreaTest {
@@ -47,7 +46,7 @@ public class TableAreaTest {
     public void testIsRoundEndEmptySources() {
         TableCenter source1 = new TableCenter();
         TableCenter source2 = new TableCenter();
-        ArrayList<TyleSource> sources = new ArrayList<>(Arrays.asList(source1, source2));
+        ArrayList<TileSource> sources = new ArrayList<>(Arrays.asList(source1, source2));
         TableArea tableArea = new TableArea(sources);
 
         assertFalse(tableArea.isRoundEnd());
@@ -73,7 +72,7 @@ public class TableAreaTest {
         TableCenter source1 = new TableCenter();
         source1.add(new Tile[]{Tile.RED, Tile.RED, Tile.RED});
         TableCenter source2 = new TableCenter();
-        ArrayList<TyleSource> sources = new ArrayList<>(Arrays.asList(source1, source2));
+        ArrayList<TileSource> sources = new ArrayList<>(Arrays.asList(source1, source2));
         TableArea tableArea = new TableArea(sources);
 
         tableArea.startNewRound();
@@ -94,7 +93,7 @@ public class TableAreaTest {
         source1.add(new Tile[]{Tile.RED, Tile.BLACK, Tile.RED});
         TableCenter source2 = new TableCenter();
         source2.add(new Tile[]{Tile.GREEN, Tile.GREEN, Tile.GREEN});
-        ArrayList<TyleSource> sources = new ArrayList<>(Arrays.asList(source1, source2));
+        ArrayList<TileSource> sources = new ArrayList<>(Arrays.asList(source1, source2));
         TableArea tableArea = new TableArea(sources);
 
         String expectedState = source1.state() + "\n" + source2.state() + "\n";

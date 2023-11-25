@@ -20,9 +20,8 @@ public class TableCenterTest {
             assertEquals("There should be the STARTING_PLAYER tile", "S", tableCenter.state());
             tableCenter.add(new Tile[]{Tile.RED, Tile.RED,});
             assertEquals("We expect SRR", "SRR", tableCenter.state());
-            assertEquals("[RED, RED, STARTING_PLAYER]",
-                    new Tile[]{Tile.RED, Tile.RED, Tile.STARTING_PLAYER,},
-                    tableCenter.take(Tile.RED.ordinal()));
+            Tile[] takenTiles = tableCenter.take(Tile.RED.ordinal());
+            assertEquals("[STARTING_PLAYER, RED, RED]", new Tile[]{Tile.STARTING_PLAYER, Tile.RED, Tile.RED}, takenTiles);
             assertTrue("Now the table center is empty", tableCenter.isEmpty());
             assertEquals("Now the table center is empty", "", tableCenter.state());
             tableCenter.add(new Tile[]{Tile.RED, Tile.RED,});
