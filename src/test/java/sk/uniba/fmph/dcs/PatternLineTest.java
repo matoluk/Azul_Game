@@ -76,4 +76,45 @@ public class PatternLineTest {
         assertEquals("UsedTiles[0] should be RED", Tile.RED, usedTiles.tiles.get(0));
         assertEquals("UsedTiles[1] should be RED", Tile.RED, usedTiles.tiles.get(1));
     }
+    @Test
+    public void test_blue(){
+        Tile[] tiles = {Tile.BLUE, Tile.BLUE, Tile.BLUE, Tile.BLUE, Tile.BLUE};
+        patternLine.put(tiles);
+        assertEquals("Floor should contains exactly 2 Tiles", 2, floor.tiles.size());
+        assertEquals("Floor[0] should be BLUE", Tile.BLUE, floor.tiles.get(1));
+        assertEquals("Floor[1] should be BLUE", Tile.BLUE, floor.tiles.get(1));
+        Points points = patternLine.finishRound();
+        assertEquals("PatternLine is full, should returns 3 points", 3, points.getValue());
+    }
+    @Test(expected = AssertionError.class)
+    public void test_capacity() {
+        patternLine = new PatternLine(0, wallLine, usedTiles, floor);
+    }
+    @Test(expected = AssertionError.class)
+    public void test_putNullTile() {
+        patternLine.put(new Tile[] {null});
+    }
+    @Test(expected = AssertionError.class)
+    public void test_putMoreColors() {
+        patternLine.put(new Tile[] {Tile.BLUE, Tile.RED});
+    }
+    @Test
+    public void test_putDifferentColors() {
+        patternLine.put(new Tile[] {Tile.BLUE});
+        patternLine.put(new Tile[] {Tile.RED});
+        assertEquals("Floor should contains exactly 1 Tile", 1, floor.tiles.size());
+        assertEquals("Floor should contains Tile.RED", Tile.RED, floor.tiles.get(0));
+
+        patternLine.put(new Tile[] {Tile.BLUE, Tile.BLUE});
+        assertEquals("Floor should contains 1 Tile", 1, floor.tiles.size());
+    }
+    @Test
+    public void test_wallLineCantPut() {
+        patternLine.put(new Tile[] {Tile.YELLOW});
+        assertEquals("Floor should contains exactly 1 Tile", 1, floor.tiles.size());
+        assertEquals("Floor should contains YELLOW", Tile.YELLOW, floor.tiles.get(0));
+
+        patternLine.put(new Tile[] {Tile.BLUE, Tile.BLUE, Tile.BLUE});
+        assertEquals("Floor should contains 1 Tile", 1, floor.tiles.size());
+    }
 }
