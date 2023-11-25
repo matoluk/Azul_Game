@@ -3,6 +3,9 @@ package sk.uniba.fmph.dcs;
 import java.util.List;
 
 public class TableCenter extends TileSource implements TableCenterAddInterface {
+    TableCenter(){
+        startNewRound();
+    }
     @Override
     public void startNewRound() {
         super.startNewRound();

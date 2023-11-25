@@ -8,10 +8,13 @@ public class Factory extends TileSource{
         this.capacity = capacity;
         this.bag = bag;
         this.tableCenter = tableCenter;
+        startNewRound();
     }
     @Override
     public Tile[] take(int idx){
         Tile[] toReturn = super.take(idx);
+        if (toReturn == null)
+            return null;
         tableCenter.add(tiles);
         tiles.clear();
         return toReturn;

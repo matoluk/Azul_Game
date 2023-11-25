@@ -11,7 +11,6 @@ abstract class TileSource {
     TileSource(){
         for (Tile t: Tile.values())
             idxToTile.put(t.ordinal(), t);
-        startNewRound();
     }
     public Tile[] take(int idx){
         if (idx < 0 || 5 < idx )
