@@ -1,16 +1,16 @@
 package sk.uniba.fmph.dcs;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TableCenterTest {
     private TableCenter tableCenter;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         tableCenter = new TableCenter();
     }
@@ -26,23 +26,31 @@ public class TableCenterTest {
         ArrayList<Tile> black = new ArrayList<>();
         blueBlue.add(Tile.BLACK);
         for (int i = 0; i < 2; i++) {
-            assertFalse("There should be the STARTING_PLAYER tile", tableCenter.isEmpty());
-            assertEquals("There should be the STARTING_PLAYER tile", "S", tableCenter.state());
+            assertFalse(tableCenter.isEmpty(), "There should be the STARTING_PLAYER tile");
+            assertEquals("S", tableCenter.state(), "There should be the STARTING_PLAYER tile");
             tableCenter.add(redRed);
-            assertEquals("We expect SRR", "SRR", tableCenter.state());
+            assertEquals("SRR", tableCenter.state(), "We expect SRR");
             Tile[] takenTiles = tableCenter.take(Tile.RED.ordinal());
-            assertEquals("[STARTING_PLAYER, RED, RED]", new Tile[]{Tile.STARTING_PLAYER, Tile.RED, Tile.RED}, takenTiles);
-            assertTrue("Now the table center is empty", tableCenter.isEmpty());
-            assertEquals("Now the table center is empty", "", tableCenter.state());
+            assertEquals(3, takenTiles.length);
+            assertEquals(Tile.STARTING_PLAYER, takenTiles[0]);
+            assertEquals(Tile.RED, takenTiles[1]);
+            assertEquals(Tile.RED, takenTiles[2]);
+            assertTrue(tableCenter.isEmpty(), "Now the table center is empty");
+            assertEquals("", tableCenter.state(), "Now the table center is empty");
             tableCenter.add(redRed);
             tableCenter.add(blueBlue);
             tableCenter.add(black);
             tableCenter.add(redRed);
             assertEquals("RRBBLRR", tableCenter.state());
-            assertEquals(new Tile[]{Tile.BLACK}, tableCenter.take(Tile.BLACK.ordinal()));
-            assertEquals("We expect RRBBRR", "RRBBRR", tableCenter.state());
-            assertEquals(new Tile[]{Tile.RED, Tile.RED, Tile.RED, Tile.RED}, tableCenter.take(Tile.RED.ordinal()));
-            assertEquals("We expect BB", "BB", tableCenter.state());
+            takenTiles = tableCenter.take(Tile.BLACK.ordinal());
+            assertEquals(1, takenTiles.length);
+            assertEquals(Tile.BLACK, takenTiles[0]);
+            assertEquals("RRBBRR", tableCenter.state(), "We expect RRBBRR");
+            takenTiles = tableCenter.take(Tile.RED.ordinal());
+            assertEquals(4, takenTiles.length);
+            for(int j = 0; j < 4; j++)
+                assertEquals(Tile.RED, takenTiles[j]);
+            assertEquals("BB", tableCenter.state(), "We expect BB");
 
             tableCenter.startNewRound();
         }

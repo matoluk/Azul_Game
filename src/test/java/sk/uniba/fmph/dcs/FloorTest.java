@@ -1,14 +1,14 @@
 package sk.uniba.fmph.dcs;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class FakeUsedTiles implements UsedTilesGiveInterface {
   public ArrayList<Tile> tiles;
@@ -26,7 +26,7 @@ public class FloorTest {
   private FakeUsedTiles usedTiles;
   private Floor floor;
 
-  @Before
+  @BeforeEach
   public void setUp() {
     usedTiles = new FakeUsedTiles();
     ArrayList<Points> pointPattern = new ArrayList<Points>();
@@ -43,31 +43,27 @@ public class FloorTest {
     tiles.add(Tile.RED);
     tiles.add(Tile.GREEN);
     tiles.add(Tile.RED);
-    assertEquals("Floor should be empty when created.", "", floor.state());
+    assertEquals("", floor.state(), "Floor should be empty when created.");
     floor.put(tiles);
-    assertEquals("Floor should contain tiles we put on it.", "SRGR", floor.state());
+    assertEquals("SRGR", floor.state(), "Floor should contain tiles we put on it.");
     Points points = floor.finishRound();
-    assertEquals("Floor should be empty after the round is finished.", "", floor.state());
-    assertEquals(
-        "Incorrect points calculation when there are more tiles than pattern size",
-        7,
-        points.getValue());
-    assertArrayEquals(
-        "Used tiles should get the tiles", tiles.toArray(), usedTiles.tiles.toArray());
+    assertEquals("", floor.state(), "Floor should be empty after the round is finished.");
+    assertEquals(7, points.getValue(),
+            "Incorrect points calculation when there are more tiles than pattern size");
+    assertArrayEquals(tiles.toArray(), usedTiles.tiles.toArray(),
+            "Used tiles should get the tiles");
 
     floor.put(Arrays.asList(Tile.RED));
     floor.put(Arrays.asList(Tile.GREEN));
     floor.put(new ArrayList<Tile>());
-    assertEquals("Floor should contain tiles we put on it.", "RG", floor.state());
+    assertEquals("RG", floor.state(), "Floor should contain tiles we put on it.");
     Points points2 = floor.finishRound();
-    assertEquals("Floor should be empty after the round is finished.", "", floor.state());
-    assertEquals(
-        "Incorrect points calculation when there are less tiles than pattern size",
-        3,
-        points2.getValue());
+    assertEquals("", floor.state(), "Floor should be empty after the round is finished.");
+    assertEquals(3, points2.getValue(),
+            "Incorrect points calculation when there are less tiles than pattern size");
     tiles.add(Tile.RED);
     tiles.add(Tile.GREEN);
-    assertArrayEquals(
-        "Used tiles should get the tiles", tiles.toArray(), usedTiles.tiles.toArray());
+    assertArrayEquals(tiles.toArray(), usedTiles.tiles.toArray(),
+            "Used tiles should get the tiles");
   }
 }

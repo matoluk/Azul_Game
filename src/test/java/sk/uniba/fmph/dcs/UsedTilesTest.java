@@ -1,23 +1,24 @@
 package sk.uniba.fmph.dcs;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class UsedTilesTest {
 
     private UsedTiles usedTiles;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         usedTiles = new UsedTiles();
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testGiveNullArray() {
-        usedTiles.give(null);
+        assertThrows(IllegalArgumentException.class, () -> {
+            usedTiles.give(null);
+        });
     }
 
     @Test

@@ -1,12 +1,12 @@
 package sk.uniba.fmph.dcs;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 class FakeBag implements BagInterface{
     public ArrayList<Tile> tiles = new ArrayList<>();
@@ -28,7 +28,7 @@ public class FactoryTest {
     private Factory factory;
     private FakeBag bag;
     private FakeTableCenter tableCenter;
-    @Before
+    @BeforeEach
     public void setUp() {
         bag = new FakeBag();
         bag.tiles.add(Tile.RED);

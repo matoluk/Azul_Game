@@ -1,12 +1,12 @@
 package sk.uniba.fmph.dcs;
 
-import static org.junit.Assert.*;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class WallLineTest {
     WallLine[] wallLines;
-    @Before
+    @BeforeEach
     public void setUp() {
         wallLines = new WallLine[5];
         for (int i = 0; i < 5; i++){
@@ -44,25 +44,25 @@ public class WallLineTest {
     @Test
     public void test_wallLines(){
         for (int i = 0; i < 5; i++) {
-            assertEquals("Floor should be empty when created.", "     ", wallLines[i].state());
-            assertEquals("The output of canPut should be true", true, wallLines[i].canPutTile(Tile.BLACK));
+            assertEquals("     ", wallLines[i].state(), "Floor should be empty when created.");
+            assertEquals(true, wallLines[i].canPutTile(Tile.BLACK), "The output of canPut should be true");
         }
-        assertEquals("Method should add 1 point", 1, wallLines[2].putTile(Tile.BLACK).getValue());
-        assertEquals("The output of canPut should be false", false, wallLines[2].canPutTile(Tile.BLACK));
-        assertEquals("WallLine state() test", " L   ", wallLines[2].state());
-        assertEquals("Method should add 2 points", 2, wallLines[1].putTile(Tile.RED).getValue());
+        assertEquals(1, wallLines[2].putTile(Tile.BLACK).getValue(), "Method should add 1 point");
+        assertEquals(false, wallLines[2].canPutTile(Tile.BLACK), "The output of canPut should be false");
+        assertEquals(" L   ", wallLines[2].state(), "WallLine state() test");
+        assertEquals(2, wallLines[1].putTile(Tile.RED).getValue(), "Method should add 2 points");
         wallLines[0].putTile(Tile.BLACK);
-        assertEquals("Method should add 1 point", 1, wallLines[0].putTile(Tile.RED).getValue());
-        assertEquals("Method should add 5 points", 5, wallLines[0].putTile(Tile.GREEN).getValue());
-        assertEquals("Method should add 2 points", 2, wallLines[0].putTile(Tile.BLUE).getValue());
+        assertEquals(1, wallLines[0].putTile(Tile.RED).getValue(), "Method should add 1 point");
+        assertEquals(5, wallLines[0].putTile(Tile.GREEN).getValue(), "Method should add 5 points");
+        assertEquals(2, wallLines[0].putTile(Tile.BLUE).getValue(), "Method should add 2 points");
         wallLines[1].putTile(Tile.GREEN);
         wallLines[3].putTile(Tile.BLACK);
-        assertEquals("Method should add 7 points", 7, wallLines[0].putTile(Tile.YELLOW).getValue());
-        assertEquals("Method should add 2 points", 2, wallLines[4].putTile(Tile.BLUE).getValue());
-        assertEquals("Method should add 7 points", 7, wallLines[2].putTile(Tile.RED).getValue());
+        assertEquals(7, wallLines[0].putTile(Tile.YELLOW).getValue(), "Method should add 7 points");
+        assertEquals(2, wallLines[4].putTile(Tile.BLUE).getValue(), "Method should add 2 points");
+        assertEquals(7, wallLines[2].putTile(Tile.RED).getValue(), "Method should add 7 points");
 
-        assertEquals("WallLine state() test", " LR  ", wallLines[2].state());
-        assertEquals("WallLine state() test", "RGIBL", wallLines[0].state());
+        assertEquals(" LR  ", wallLines[2].state(), "WallLine state() test");
+        assertEquals("RGIBL", wallLines[0].state(), "WallLine state() test");
     }
 
 }

@@ -1,13 +1,14 @@
 package sk.uniba.fmph.dcs;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class FakeWallLinePut implements WallLineInterface{
     public boolean canPutTile(Tile tile) {
@@ -49,7 +50,7 @@ public class PatternLineTest {
     private FakeFloorPut floor;
     private FakeUsedTilesGive usedTiles;
     private PatternLine patternLine;
-    @Before
+    @BeforeEach
     public void setUp() {
         wallLine = new FakeWallLinePut();
         floor = new FakeFloorPut();
@@ -60,61 +61,67 @@ public class PatternLineTest {
     public void test_main(){
         Tile[] tiles = {Tile.RED, Tile.RED, Tile.STARTING_PLAYER};
         patternLine.put(tiles);
-        assertEquals("Floor should contains exactly 1 Tile", 1, floor.tiles.size());
-        assertEquals("Floor should contains Tile.STARTING_PLAYER", Tile.STARTING_PLAYER, floor.tiles.get(0));
+        assertEquals(1, floor.tiles.size(), "Floor should contains exactly 1 Tile");
+        assertEquals(Tile.STARTING_PLAYER, floor.tiles.get(0), "Floor should contains Tile.STARTING_PLAYER");
         Points points = patternLine.finishRound();
-        assertEquals("PatternLine is not full, should returns 0 points", 0, points.getValue());
-        assertEquals("UsedTiles should be empty", 0, usedTiles.tiles.size());
+        assertEquals(0, points.getValue(), "PatternLine is not full, should returns 0 points");
+        assertEquals(0, usedTiles.tiles.size(), "UsedTiles should be empty");
 
         tiles = new Tile[] {Tile.RED, Tile.RED};
         patternLine.put(tiles);
-        assertEquals("Floor should contains exactly 2 Tiles", 2, floor.tiles.size());
-        assertEquals("Floor[1] should be RED", Tile.RED, floor.tiles.get(1));
+        assertEquals(2, floor.tiles.size(), "Floor should contains exactly 2 Tiles");
+        assertEquals(Tile.RED, floor.tiles.get(1), "Floor[1] should be RED");
         points = patternLine.finishRound();
-        assertEquals("PatternLine is full, should returns 7 points", 7, points.getValue());
-        assertEquals("UsedTiles should contains 2 Tiles", 2, usedTiles.tiles.size());
-        assertEquals("UsedTiles[0] should be RED", Tile.RED, usedTiles.tiles.get(0));
-        assertEquals("UsedTiles[1] should be RED", Tile.RED, usedTiles.tiles.get(1));
+        assertEquals(7, points.getValue(), "PatternLine is full, should returns 7 points");
+        assertEquals(2, usedTiles.tiles.size(), "UsedTiles should contains 2 Tiles");
+        assertEquals(Tile.RED, usedTiles.tiles.get(0), "UsedTiles[0] should be RED");
+        assertEquals(Tile.RED, usedTiles.tiles.get(1), "UsedTiles[1] should be RED");
     }
     @Test
     public void test_blue(){
         Tile[] tiles = {Tile.BLUE, Tile.BLUE, Tile.BLUE, Tile.BLUE, Tile.BLUE};
         patternLine.put(tiles);
-        assertEquals("Floor should contains exactly 2 Tiles", 2, floor.tiles.size());
-        assertEquals("Floor[0] should be BLUE", Tile.BLUE, floor.tiles.get(1));
-        assertEquals("Floor[1] should be BLUE", Tile.BLUE, floor.tiles.get(1));
+        assertEquals(2, floor.tiles.size(), "Floor should contains exactly 2 Tiles");
+        assertEquals(Tile.BLUE, floor.tiles.get(1), "Floor[0] should be BLUE");
+        assertEquals(Tile.BLUE, floor.tiles.get(1), "Floor[1] should be BLUE");
         Points points = patternLine.finishRound();
-        assertEquals("PatternLine is full, should returns 3 points", 3, points.getValue());
+        assertEquals(3, points.getValue(), "PatternLine is full, should returns 3 points");
     }
-    @Test(expected = AssertionError.class)
+    @Test
     public void test_capacity() {
-        patternLine = new PatternLine(0, wallLine, usedTiles, floor);
+        assertThrows(AssertionError.class, () -> {
+            patternLine = new PatternLine(0, wallLine, usedTiles, floor);
+        });
     }
-    @Test(expected = AssertionError.class)
+    @Test
     public void test_putNullTile() {
-        patternLine.put(new Tile[] {null});
+        assertThrows(AssertionError.class, () -> {
+            patternLine.put(new Tile[]{null});
+        });
     }
-    @Test(expected = AssertionError.class)
+    @Test
     public void test_putMoreColors() {
-        patternLine.put(new Tile[] {Tile.BLUE, Tile.RED});
+        assertThrows(AssertionError.class, () -> {
+            patternLine.put(new Tile[] {Tile.BLUE, Tile.RED});
+        });
     }
     @Test
     public void test_putDifferentColors() {
         patternLine.put(new Tile[] {Tile.BLUE});
         patternLine.put(new Tile[] {Tile.RED});
-        assertEquals("Floor should contains exactly 1 Tile", 1, floor.tiles.size());
-        assertEquals("Floor should contains Tile.RED", Tile.RED, floor.tiles.get(0));
+        assertEquals(1, floor.tiles.size(), "Floor should contains exactly 1 Tile");
+        assertEquals(Tile.RED, floor.tiles.get(0), "Floor should contains Tile.RED");
 
         patternLine.put(new Tile[] {Tile.BLUE, Tile.BLUE});
-        assertEquals("Floor should contains 1 Tile", 1, floor.tiles.size());
+        assertEquals(1, floor.tiles.size(), "Floor should contains 1 Tile");
     }
     @Test
     public void test_wallLineCantPut() {
         patternLine.put(new Tile[] {Tile.YELLOW});
-        assertEquals("Floor should contains exactly 1 Tile", 1, floor.tiles.size());
-        assertEquals("Floor should contains YELLOW", Tile.YELLOW, floor.tiles.get(0));
+        assertEquals(1, floor.tiles.size(), "Floor should contains exactly 1 Tile");
+        assertEquals(Tile.YELLOW, floor.tiles.get(0), "Floor should contains YELLOW");
 
         patternLine.put(new Tile[] {Tile.BLUE, Tile.BLUE, Tile.BLUE});
-        assertEquals("Floor should contains 1 Tile", 1, floor.tiles.size());
+        assertEquals(1, floor.tiles.size(), "Floor should contains 1 Tile");
     }
 }

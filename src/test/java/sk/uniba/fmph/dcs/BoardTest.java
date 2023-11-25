@@ -1,9 +1,9 @@
 package sk.uniba.fmph.dcs;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -57,7 +57,7 @@ public class BoardTest {
     private FakeWallLine[] wallLines = new FakeWallLine[2];
     private FakeFloor floor;
     private Board board;
-    @Before
+    @BeforeEach
     public void setUp() {
         patternLines[0] = new FakePatternLine("[]");
         patternLines[1] = new FakePatternLine("[][]");
@@ -68,25 +68,25 @@ public class BoardTest {
     }
     @Test
     public void test_put() {
-        assertEquals("patternLine[0].put() should not be called.", false, patternLines[0].putCalled);
+        assertEquals(false, patternLines[0].putCalled, "patternLine[0].put() should not be called.");
         board.put(0, new Tile[0]);
-        assertEquals("patternLine[1].put() should not be called.", false, patternLines[1].putCalled);
-        assertEquals("patternLine[0].put() should be called.", true, patternLines[0].putCalled);
+        assertEquals(false, patternLines[1].putCalled, "patternLine[1].put() should not be called.");
+        assertEquals(true, patternLines[0].putCalled, "patternLine[0].put() should be called.");
     }
     @Test
     public void test_points() {
-        assertEquals("Points should be 0.",0, board.points.getValue());
+        assertEquals(0, board.points.getValue(), "Points should be 0.");
         board.finishRound();
-        assertEquals("Points should be 8.",8, board.points.getValue());
+        assertEquals(8, board.points.getValue(), "Points should be 8.");
         board.finishRound();
-        assertEquals("Points should be 16.",16, board.points.getValue());
+        assertEquals(16, board.points.getValue(), "Points should be 16.");
 
     }
     @Test
     public void test_state() {
-        assertEquals("board.state() test.", board.points + "\n" +
+        assertEquals(board.points + "\n" +
                 "[]   | [1][2]\n" +
                 "[][] | [3][4]\n" +
-                "floor", board.state());
+                "floor", board.state(), "board.state() test.");
     }
 }
