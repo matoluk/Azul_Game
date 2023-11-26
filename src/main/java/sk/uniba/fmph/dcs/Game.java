@@ -3,15 +3,15 @@ package sk.uniba.fmph.dcs;
 import java.util.ArrayList;
 
 public class Game implements GameInterface{
-    private BagInterface bag;
+    //private BagInterface bag;
     private TableAreaInterface tableArea;
     private BoardInterface[] boards;
     private ObserverNotifyInterface observer;
     private FinishRoundResult gameStatus = FinishRoundResult.NORMAL;
     private int startPlayer = 0;
     private int currentPlayer = 0;
-    Game(BagInterface bag, TableAreaInterface tableArea, BoardInterface[] boards, ObserverNotifyInterface observer){
-        this.bag = bag;
+    Game(/*BagInterface bag, */TableAreaInterface tableArea, BoardInterface[] boards, ObserverNotifyInterface observer){
+        //this.bag = bag;
         this.tableArea = tableArea;
         this.boards = boards;
         this.observer = observer;
@@ -60,10 +60,10 @@ public class Game implements GameInterface{
             observer.notifyEverybody("Player"+i+"'s Board:\n" + boards[i].state());
 
         if (gameStatus == FinishRoundResult.NORMAL) {
-            observer.notifyEverybody("New round");
             tableArea.startNewRound();
-            observer.notifyEverybody("TableArea:\n" + tableArea.state());
             currentPlayer = startPlayer;
+            observer.notifyEverybody("New round");
+            observer.notifyEverybody("TableArea:\n" + tableArea.state());
             observer.notifyEverybody("Starts player " + startPlayer);
         }else
             endGame();
