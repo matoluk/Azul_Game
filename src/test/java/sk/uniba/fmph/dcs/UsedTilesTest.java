@@ -8,7 +8,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SuppressWarnings("CollectionAddAllCanBeReplacedWithConstructor")
 public class UsedTilesTest {
 
     private UsedTiles usedTiles;

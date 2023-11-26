@@ -22,12 +22,14 @@ public class Bag implements BagInterface{
     }
     @Override
     public List<Tile> take(int count) {
+        assert (count >= 0);
         startNewRound();
+        count = Integer.min(count, tiles.size());
+
         List<Tile> toReturn = new ArrayList<>();
-        Tile[] tiles = Tile.values();
         for (int i = 0; i < count; i++) {
-            int idx = random.nextInt(5) + 1;
-            toReturn.add(tiles[idx]);
+            int index = random.nextInt(tiles.size());
+            toReturn.add(tiles.remove(index));
         }
         return toReturn;
     }
