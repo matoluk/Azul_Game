@@ -40,7 +40,7 @@ public class TableAreaTest {
 
         Tile[] takenTiles = tableArea.take(1, Tile.RED.ordinal());
 
-        assertEquals(0, takenTiles.length);
+        assertNull(takenTiles);
     }
 
 

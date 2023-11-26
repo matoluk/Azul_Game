@@ -75,16 +75,16 @@ public class BoardTest {
     }
     @Test
     public void test_points() {
-        assertEquals(0, board.points.getValue(), "Points should be 0.");
+        assertEquals(0, board.getPoints().getValue(), "Points should be 0.");
         board.finishRound();
-        assertEquals(8, board.points.getValue(), "Points should be 8.");
+        assertEquals(8, board.getPoints().getValue(), "Points should be 8.");
         board.finishRound();
-        assertEquals(16, board.points.getValue(), "Points should be 16.");
+        assertEquals(16, board.getPoints().getValue(), "Points should be 16.");
 
     }
     @Test
     public void test_state() {
-        assertEquals(board.points + "\n" +
+        assertEquals(board.getPoints() + "\n" +
                 "[]   | [1][2]\n" +
                 "[][] | [3][4]\n" +
                 "floor", board.state(), "board.state() test.");

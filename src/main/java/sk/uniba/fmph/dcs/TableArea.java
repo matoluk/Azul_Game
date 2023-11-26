@@ -9,12 +9,10 @@ public class TableArea implements TableAreaInterface{
     }
     @Override
     public Tile[] take(int sourceIdx, int idx) {
-        if (sourceIdx >= 0 && sourceIdx < tileSources.size()) {
-            TileSource selectedSource = tileSources.get(sourceIdx);
-            return selectedSource.take(idx);
-        } else {
-            return new Tile[0];
-        }
+        if (sourceIdx < 0 || sourceIdx >= tileSources.size())
+            return null;
+        TileSource selectedSource = tileSources.get(sourceIdx);
+        return selectedSource.take(idx);
     }
 
     @Override

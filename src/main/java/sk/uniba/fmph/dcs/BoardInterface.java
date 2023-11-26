@@ -5,4 +5,5 @@ interface BoardInterface {
     FinishRoundResult finishRound();
     void endGame();
     String state();
+    Points getPoints();
 }
