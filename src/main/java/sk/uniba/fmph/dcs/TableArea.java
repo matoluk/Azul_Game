@@ -1,40 +1,44 @@
 package sk.uniba.fmph.dcs;
 import java.util.ArrayList;
 
-public class TableArea {
-    private ArrayList<TileSource> tyleSources;
+public class TableArea implements TableAreaInterface{
+    private ArrayList<TileSource> tileSources;
 
-    public TableArea(ArrayList<TileSource> tyleSources) {
-        this.tyleSources = tyleSources;
+    public TableArea(ArrayList<TileSource> tileSources) {
+        this.tileSources = tileSources;
     }
+    @Override
     public Tile[] take(int sourceIdx, int idx) {
-        if (sourceIdx >= 0 && sourceIdx < tyleSources.size()) {
-            TileSource selectedSource = tyleSources.get(sourceIdx);
+        if (sourceIdx >= 0 && sourceIdx < tileSources.size()) {
+            TileSource selectedSource = tileSources.get(sourceIdx);
             return selectedSource.take(idx);
         } else {
             return new Tile[0];
         }
     }
 
+    @Override
     public boolean isRoundEnd() {
-        for (TileSource tyleSource : tyleSources) {
-            if (!tyleSource.isEmpty()) {
+        for (TileSource tileSource : tileSources) {
+            if (!tileSource.isEmpty()) {
                 return false;
             }
         }
         return true;
     }
 
+    @Override
     public void startNewRound() {
-        for (TileSource tyleSource : tyleSources) {
-            tyleSource.startNewRound();
+        for (TileSource tileSource : tileSources) {
+            tileSource.startNewRound();
         }
     }
 
+    @Override
     public String state() {
         StringBuilder stateBuilder = new StringBuilder();
-        for (TileSource tyleSource : tyleSources) {
-            stateBuilder.append(tyleSource.state());
+        for (TileSource tileSource : tileSources) {
+            stateBuilder.append(tileSource.state());
             stateBuilder.append("\n");
         }
         return stateBuilder.toString();

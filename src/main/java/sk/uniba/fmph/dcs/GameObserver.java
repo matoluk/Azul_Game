@@ -3,8 +3,9 @@ package sk.uniba.fmph.dcs;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameObserver implements GameObserverInterface{
+public class GameObserver implements GameObserverInterface, ObserverNotifyInterface{
     private final List<ObserverInterface> observers = new ArrayList<>();
+    @Override
     public void notifyEverybody(String state){
         for (ObserverInterface observer: observers) {
             observer.notify(state);
