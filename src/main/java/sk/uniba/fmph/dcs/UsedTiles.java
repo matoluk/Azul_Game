@@ -2,7 +2,7 @@ package sk.uniba.fmph.dcs;
 
 import java.util.*;
 
-public class UsedTiles {
+public class UsedTiles implements UsedTilesGiveInterface, UsedTilesTakeAllInterface{
     private final List<Tile> usedTiles; //List to hold used tiles
 
     public UsedTiles() {
@@ -10,25 +10,24 @@ public class UsedTiles {
     }
 
     // Method to add an array of Tile objects to the usedTiles list without STARTING_PLAYER tile.
-    public void give(Tile[] tiles) {
+    @Override
+    public void give(Collection<Tile> tiles) {
         if (tiles == null) {
             throw new IllegalArgumentException("Cannot add null array of tiles.");
         }
         for (Tile tile : tiles) {
-            // Check if the current tile is the STARTING_PLAYER tile
-            if (tile == Tile.STARTING_PLAYER) {
-                continue;
+            if (tile != Tile.STARTING_PLAYER) {
+                this.usedTiles.add(tile);
             }
-            this.usedTiles.add(tile);
         }
     }
 
     // Method to retrieve and remove all Tile objects from the usedTiles list.
-    public Tile[] takeAll() {
-        Tile[] tilesArray = new Tile[this.usedTiles.size()];
-        tilesArray = this.usedTiles.toArray(tilesArray);
-        this.usedTiles.clear();
-        return tilesArray;
+    @Override
+    public List<Tile> takeAll() {
+        List<Tile> toReturn = List.copyOf(usedTiles);
+        usedTiles.clear();
+        return toReturn;
     }
 
     // Method to return a string representation of the current state of usedTiles.

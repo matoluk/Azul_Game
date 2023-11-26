@@ -4,4 +4,5 @@ import java.util.List;
 
 public interface BagInterface {
     List<Tile> take(int count);
+    String state();
 }

@@ -15,6 +15,10 @@ class FakeBag implements BagInterface{
         assert (count == 4);
         return tiles;
     }
+    @Override
+    public String state(){
+        return null;
+    }
 }
 class FakeTableCenter implements TableCenterAddInterface{
     public ArrayList<Tile> tiles = new ArrayList<>();
