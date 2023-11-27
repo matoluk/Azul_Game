@@ -4,21 +4,22 @@ import java.util.Optional;
 
 public class VerticalLineRule implements ScoringRule{
     @Override
-    public int calculatePoints(Optional<Tile>[][] wall){
-        int sum = 0;
-        boolean complete = true;
-        for(int i = 0; i < wall.length; i++){
-            for(int j = 0; j < wall.length; j++){
-                if(!wall[j][i].isPresent()){
-                    complete = false;
+    public int calculatePoints(TileField[][] wall){
+        if (wall.length == 0)
+            return 0;
+
+        int points = 0;
+        for(int column = 0; column < wall[0].length; column++){
+            boolean fullColumn = true;
+            for (TileField[] wallLine : wall)
+                if (wallLine[column].isEmpty()) {
+                    fullColumn = false;
                     break;
                 }
+            if(fullColumn){
+                points += EndGameScoringConstants.VERTICAL_LINE_POINTS;
             }
-            if(complete){
-                sum += EndGameScoringConstants.VERTICAL_LINE_POINTS;
-            }
-            complete = true;
         }
-        return sum;
+        return points;
     }
 }

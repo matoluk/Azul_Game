@@ -2,38 +2,24 @@ package sk.uniba.fmph.dcs;
 
 import org.junit.jupiter.api.BeforeEach;
 
-import java.util.Optional;
-
 public abstract class ScoreRulesTest {
     protected ScoringRule scoringRule;
-    protected Tile[] tiles;
-    protected Optional<Tile>[][] wall;
+    protected TileField[][] wall;
+    private int colours = Tile.values().length - 1;
 
     @BeforeEach
     public void setUp() {
         initializeScoringRule();
-        initializeTiles();
         initializeWall();
     }
 
     protected abstract void initializeScoringRule();
 
-    protected void initializeTiles() {
-        tiles = new Tile[Tile.values().length - 1];
-        int i = 0;
-        for (Tile tile : Tile.values()) {
-            if (tile != Tile.STARTING_PLAYER) {
-                tiles[i] = tile;
-                i++;
-            }
-        }
-    }
-
     protected void initializeWall() {
-        wall = new Optional[tiles.length][tiles.length];
-        for(int j = 0; j < wall.length; j++){
-            for(int k = 0; k < wall.length; k++){
-                wall[j][k] = Optional.empty();
+        wall = new TileField[colours][colours];
+        for(int i = 0; i < wall.length; i++){
+            for(int j = 0; j < wall.length; j++){
+                wall[i][j] = new TileField(Tile.values()[1 + ((i+colours-j) % colours)]);
             }
         }
     }

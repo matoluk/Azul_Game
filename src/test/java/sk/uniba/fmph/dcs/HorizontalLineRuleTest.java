@@ -14,14 +14,14 @@ public class HorizontalLineRuleTest extends ScoreRulesTest {
 
     @Test
     public void testCalculatePointsWithCompleteHorizontalLine1() {
-        wall[0][1] = Optional.of(tiles[0]);
-        wall[0][4] = Optional.of(tiles[4]);
-        for (int i = 0; i < tiles.length; i++) {
-            wall[1][i] = Optional.of(tiles[(i + 1) % tiles.length]);
+        wall[0][1].put();
+        wall[0][4].put();
+        for (int i = 0; i < wall.length; i++) {
+            wall[1][i].put();
         }
 
-        wall[2][0] = Optional.of(tiles[0]);
-        wall[3][1] = Optional.of(tiles[1]);
+        wall[2][0].put();
+        wall[3][1].put();
 
         int points = scoringRule.calculatePoints(wall);
 
@@ -31,8 +31,8 @@ public class HorizontalLineRuleTest extends ScoreRulesTest {
     @Test
     public void testCalculatePointsWithCompleteHorizontalLine2() {
 
-        for (int i = 0; i < tiles.length; i++) {
-            wall[2][i] = Optional.of(tiles[(i + 2) % tiles.length]);
+        for (int i = 0; i < wall.length; i++) {
+            wall[2][i].put();
         }
 
         int points = scoringRule.calculatePoints(wall);
@@ -42,9 +42,9 @@ public class HorizontalLineRuleTest extends ScoreRulesTest {
 
     @Test
     public void testCalculatePointsWithAllCompleteHorizontalLine(){
-        for(int i = 0; i < tiles.length; i++){
-            for(int j = 0; j < tiles.length; j++){
-                wall[i][j] = Optional.of(tiles[(i + j) % tiles.length]);
+        for(int i = 0; i < wall.length; i++){
+            for(int j = 0; j < wall.length; j++){
+                wall[i][j].put();
             }
         }
 
@@ -56,8 +56,8 @@ public class HorizontalLineRuleTest extends ScoreRulesTest {
     @Test
     public void testCalculatePointsWithNonCompleteHorizontalLine1() {
 
-        wall[3][0] = Optional.of(tiles[0]);
-        wall[3][2] = Optional.of(tiles[2]);
+        wall[3][0].put();
+        wall[3][2].put();
 
         int points = scoringRule.calculatePoints(wall);
 
@@ -67,8 +67,8 @@ public class HorizontalLineRuleTest extends ScoreRulesTest {
     @Test
     public void testCalculatePointsWithNonCompleteHorizontalLine2() {
 
-        wall[0][1] = Optional.of(tiles[1]);
-        wall[0][3] = Optional.of(tiles[3]);
+        wall[0][1].put();
+        wall[0][3].put();
 
         int points = scoringRule.calculatePoints(wall);
 

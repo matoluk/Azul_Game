@@ -32,8 +32,8 @@ class FakeWallLine implements WallLineInterface{
     public boolean canPutTile(Tile tile) {
         return false;
     }
-    public Optional<Tile>[] getTiles() {
-        return new Optional[0];
+    public TileField[] getTiles() {
+        return new TileField[0];
     }
     public Points putTile(Tile tile) {
         return null;

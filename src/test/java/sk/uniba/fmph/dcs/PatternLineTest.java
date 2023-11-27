@@ -15,7 +15,7 @@ class FakeWallLinePut implements WallLineInterface{
         assert (tile != null && tile != Tile.STARTING_PLAYER);
         return tile == Tile.RED || tile == Tile.BLUE;
     }
-    public Optional<Tile>[] getTiles() {
+    public TileField[] getTiles() {
         return null;
     }
     public Points putTile(Tile tile) {

@@ -1,23 +1,16 @@
 package sk.uniba.fmph.dcs;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Optional;
-
 public class WallLine implements WallLineInterface{
-    private ArrayList tiles;
-    private int countColours;
     private WallLine lineUp;
     private WallLine lineDown;
-    private Tile[] currentWallLine;
+    private TileField[] wallLine;
 
-    public WallLine(Tile[] tiles, WallLine lineup, WallLine linedown) {
-        this.lineDown = linedown;
-        this.lineUp = lineup;
-        this.tiles = new ArrayList<>(Arrays.asList(tiles));
-
-        this.countColours = Tile.values().length - 1;
-        this.currentWallLine = new Tile[countColours];
+    public WallLine(Tile[] tiles, WallLine lineUp, WallLine lineDown) {
+        this.lineDown = lineDown;
+        this.lineUp = lineUp;
+        wallLine = new TileField[tiles.length];
+        for(int i = 0; i < tiles.length; i++)
+            wallLine[i] = new TileField(tiles[i]);
     }
     public void setUp(WallLine line){
         this.lineUp = line;
@@ -32,113 +25,72 @@ public class WallLine implements WallLineInterface{
         return lineDown;
     }
 
-    public boolean canPutTile(Tile tile) {
-        int index = tiles.indexOf(tile);
-        if (index != -1) {
-            if (currentWallLine[index] != null) {
-                return false;
-            }
-            return true;
-        }
+    public boolean canPutTile(Tile color) {
+        for (TileField tileField : wallLine)
+            if (tileField.isEmpty() && (tileField.getColor() == color))
+                return true;
         return false;
     }
 
-    public Optional<Tile>[] getTiles() {
-        Optional<Tile>[] line = new Optional[countColours];
-        for (int i = 0; i < countColours; i++) {
-            line[i] = Optional.ofNullable(currentWallLine[i]);
-        }
-        return line;
+    public TileField[] getTiles() {
+        return wallLine;
     }
 
-    public Points putTile(Tile tile){
-        int p = 0;
-        int k = 0;
-        int idx = tiles.indexOf(tile);
-        if(canPutTile(tile)) {
-            currentWallLine[idx] = tile;
-            p++;
-            k = 1;
-            if(idx != 0){
-                int i = idx - 1;
-                while(i >= 0 & currentWallLine[i] != null) {
-                    p++;
-                    i--;
-                    k = 0;
-                    if(i < 0){
-                        break;
-                    }
-                }
-            }
-            if(idx != countColours - 1){
-                int i = idx + 1;
-                while(i <= countColours - 1 & currentWallLine[i] != null){
-                    p++;
-                    i++;
-                    k = 0;
-                    if(i == countColours){
-                        break;
-                    }
-                }
+    public Points putTile(Tile color){
+        if (!canPutTile(color))
+            return null;
+        int idx;
+        for (idx = 0; idx < wallLine.length; idx++)
+            if (wallLine[idx].isEmpty() && (wallLine[idx].getColor() == color))
+                break;
+        wallLine[idx].put();
 
-            }
-            if(lineDown != null){
-                Optional<Tile>[] down = lineDown.getTiles();
-                if(down[idx].isPresent()){
-                    p++;
-                    if(k == 0){
-                        p++;
-                        k = 1;
-                    }
-                    p = columnDown(lineDown, idx, p);
-                }
-            }
-            if(lineUp != null){
-                Optional<Tile>[] up = lineUp.getTiles();
-                if(up[idx].isPresent()){
-                    p++;
-                    if(k == 0){
-                        p++;
-                    }
-                    p = columnUp(lineUp, idx, p);
-                }
-            }
-            return new Points(p);
-        }
-        return null;
+        int inRow = inRow(idx);
+        int inCol = inCol(idx);
+        if (inRow == 1 || inCol == 1)
+            return new Points(inRow + inCol - 1);
+        return new Points(inRow + inCol);
     }
-    private int columnUp(WallLine wallLine, int idx, int p){
-        if(wallLine.lineUp != null){
-            Optional<Tile>[] up = wallLine.getUp().getTiles();
-            if(up[idx].isPresent()){
-                p++;
-                p = columnUp(wallLine.getUp(), idx, p);
-                return p;
-           }
-            return p;
+    private int inRow(int idx) {
+        int inRow = 1;
+        for (int left = idx - 1; left >= 0; left--){
+            if(wallLine[left].isEmpty())
+                break;
+            else
+                inRow++;
         }
-        return p;
+        for (int right = idx + 1; right < wallLine.length; right++){
+            if(wallLine[right].isEmpty())
+                break;
+            else
+                inRow++;
+        }
+        return inRow;
     }
-    private int columnDown(WallLine wallLine, int idx, int p){
-        if(wallLine.lineDown != null){
-            Optional<Tile>[] down = wallLine.getDown().getTiles();
-            if(down[idx].isPresent()){
-                p++;
-                p = columnDown(wallLine.getDown(), idx, p);
-                return p;
-            }
-            return p;
+    private int inCol(int idx){
+        int inCol = 1;
+        for (WallLine line = lineUp; line != null; line = line.getUp()){
+            if(line.getTiles()[idx].isEmpty())
+                break;
+            else
+                inCol++;
         }
-        return p;
+        for (WallLine line = lineDown; line != null; line = line.getDown()){
+            if(line.getTiles()[idx].isEmpty())
+                break;
+            else
+                inCol++;
+        }
+        return inCol;
     }
 
     public String state(){
         StringBuilder toReturn = new StringBuilder();
-        for (Tile tile : currentWallLine){
-            if (tile == null)
-                toReturn.append(" ");
+        for (TileField field : wallLine){
+            if (field.isEmpty())
+                toReturn.append(field.getColor().toString().toLowerCase());
             else
-                toReturn.append(tile);
+                toReturn.append(field.getColor().toString().toUpperCase());
         }
         return toReturn.toString();
     }

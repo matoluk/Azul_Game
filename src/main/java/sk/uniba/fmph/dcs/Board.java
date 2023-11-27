@@ -16,8 +16,8 @@ public class Board implements BoardInterface{
         this.floor = floor;
     }
 
-    private Optional<Tile>[][] getWall(){
-        Optional<Tile>[][] wall = new Optional[wallLines.length][];
+    private TileField[][] getWall(){
+        TileField[][] wall = new TileField[wallLines.length][];
         for (int i = 0; i < wall.length; i++)
             wall[i] = wallLines[i].getTiles();
         return wall;

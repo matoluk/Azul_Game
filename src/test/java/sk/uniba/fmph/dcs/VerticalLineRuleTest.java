@@ -16,14 +16,11 @@ public class VerticalLineRuleTest extends ScoreRulesTest {
     @Test
     public void testCalculatePointsWithCompleteVerticalLine1() {
 
-        wall[0][1] = Optional.of(tiles[0]);
-        wall[1][1] = Optional.of(tiles[1]);
-        wall[2][1] = Optional.of(tiles[2]);
-        wall[3][1] = Optional.of(tiles[3]);
-        wall[4][1] = Optional.of(tiles[4]);
+        for(int i = 0; i < 5; i++)
+            wall[i][1].put();
 
-        wall[0][2] = Optional.of(tiles[0]);
-        wall[2][2] = Optional.of(tiles[1]);
+        wall[0][2].put();
+        wall[2][2].put();
 
         int points = scoringRule.calculatePoints(wall);
 
@@ -33,12 +30,12 @@ public class VerticalLineRuleTest extends ScoreRulesTest {
     @Test
     public void testCalculatePointsWithCompleteVerticalLine2() {
 
-        for (int i = 0; i < tiles.length; i++) {
-            wall[i][3] = Optional.of(tiles[(i + 2) % tiles.length]);
+        for (int i = 0; i < wall.length; i++) {
+            wall[i][3].put();
         }
 
-        wall[0][2] = Optional.of(tiles[0]);
-        wall[4][4] = Optional.of(tiles[1]);
+        wall[0][2].put();
+        wall[4][4].put();
 
         int points = scoringRule.calculatePoints(wall);
 
@@ -49,9 +46,9 @@ public class VerticalLineRuleTest extends ScoreRulesTest {
     @Test
     public void testCalculatePointsWithAllCompleteVerticalLine() {
 
-        for (int i = 0; i < tiles.length; i++) {
-            for (int j = 0; j < tiles.length; j++) {
-                wall[j][i] = Optional.of(tiles[(i + j) % tiles.length]);
+        for (int i = 0; i < wall.length; i++) {
+            for (int j = 0; j < wall.length; j++) {
+                wall[j][i].put();
             }
         }
 
@@ -63,8 +60,8 @@ public class VerticalLineRuleTest extends ScoreRulesTest {
     @Test
     public void testCalculatePointsWithNonCompleteVerticalLine1() {
 
-        wall[0][2] = Optional.of(tiles[0]);
-        wall[2][2] = Optional.of(tiles[2]);
+        wall[0][2].put();
+        wall[2][2].put();
 
         int points = scoringRule.calculatePoints(wall);
 
@@ -74,8 +71,8 @@ public class VerticalLineRuleTest extends ScoreRulesTest {
     @Test
     public void testCalculatePointsWithNonCompleteVerticalLine2() {
 
-        wall[1][0] = Optional.of(tiles[1]);
-        wall[3][0] = Optional.of(tiles[3]);
+        wall[1][0].put();
+        wall[3][0].put();
 
         int points = scoringRule.calculatePoints(wall);
 

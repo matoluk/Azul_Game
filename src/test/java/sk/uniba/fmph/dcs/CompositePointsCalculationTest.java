@@ -16,13 +16,13 @@ public class CompositePointsCalculationTest extends ScoreRulesTest {
     @Test
     public void testCalculatePointsWithHorizontalLine() {
 
-        wall[0][1] = Optional.of(tiles[0]);
-        wall[0][4] = Optional.of(tiles[4]);
-        for (int i = 0; i < tiles.length; i++) {
-            wall[1][i] = Optional.of(tiles[(i + 1) % tiles.length]);
+        wall[0][1].put();
+        wall[0][4].put();
+        for (int i = 0; i < wall.length; i++) {
+            wall[1][i].put();
         }
-        wall[2][0] = Optional.of(tiles[0]);
-        wall[3][1] = Optional.of(tiles[1]);
+        wall[2][0].put();
+        wall[3][1].put();
 
         ScoringRule horizontalLineRule = new HorizontalLineRule();
         ScoringRule verticalLineRule = new VerticalLineRule();
@@ -39,19 +39,19 @@ public class CompositePointsCalculationTest extends ScoreRulesTest {
     @Test
     public void testCalculatePointsWithRowAndColumn() {
 
-        wall[0][0] = Optional.of(tiles[2]);
-        wall[0][1] = Optional.of(tiles[0]);
-        wall[0][2] = Optional.of(tiles[1]);
-        wall[0][3] = Optional.of(tiles[3]);
-        wall[0][4] = Optional.of(tiles[4]);
+        wall[0][0].put();
+        wall[0][1].put();
+        wall[0][2].put();
+        wall[0][3].put();
+        wall[0][4].put();
 
 
-        wall[1][1] = Optional.of(tiles[1]);
-        wall[2][1] = Optional.of(tiles[2]);
-        wall[3][1] = Optional.of(tiles[3]);
-        wall[4][1] = Optional.of(tiles[4]);
+        wall[1][1].put();
+        wall[2][1].put();
+        wall[3][1].put();
+        wall[4][1].put();
 
-        wall[2][2] = Optional.of(tiles[3]);
+        wall[2][2].put();
 
         ScoringRule horizontalLineRule = new HorizontalLineRule();
         ScoringRule verticalLineRule = new VerticalLineRule();

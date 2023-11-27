@@ -15,8 +15,8 @@ public class FullColorRuleTest extends ScoreRulesTest {
 
     @Test
     public void testCalculatePointsWithCompleteDiagonal1() {
-        for (int i = 0; i < tiles.length; i++) {
-            wall[i][i] = Optional.of(tiles[(i + 2) % tiles.length]);
+        for (int i = 0; i < wall.length; i++) {
+            wall[i][i].put();
         }
 
         int points = scoringRule.calculatePoints(wall);
@@ -27,9 +27,9 @@ public class FullColorRuleTest extends ScoreRulesTest {
     @Test
     public void testCalculatePointsWithCompleteDiagonal2(){
 
-        for (int i = 0; i < tiles.length; i++) {
-            wall[i][i] = Optional.of(tiles[(i + 2) % tiles.length]);
-            wall[i][(i+1) % tiles.length] = Optional.of(tiles[(i + 2) % tiles.length]);
+        for (int i = 0; i < wall.length; i++) {
+            wall[i][i].put();
+            wall[i][(i+1) % wall.length].put();
         }
 
         int points = scoringRule.calculatePoints(wall);
@@ -40,12 +40,12 @@ public class FullColorRuleTest extends ScoreRulesTest {
     @Test
     public void testCalculatePointsWithFullEachDiagonal(){
 
-        for (int i = 0; i < tiles.length; i++) {
-            wall[i][i] = Optional.of(tiles[(i + 2) % tiles.length]);
-            wall[i][(i+1) % tiles.length] = Optional.of(tiles[(i + 2) % tiles.length]);
-            wall[i][(i+2) % tiles.length] = Optional.of(tiles[(i + 2) % tiles.length]);
-            wall[i][(i+3) % tiles.length] = Optional.of(tiles[(i + 2) % tiles.length]);
-            wall[i][(i+4) % tiles.length] = Optional.of(tiles[(i + 2) % tiles.length]);
+        for (int i = 0; i < wall.length; i++) {
+            wall[i][i].put();
+            wall[i][(i+1) % wall.length].put();
+            wall[i][(i+2) % wall.length].put();
+            wall[i][(i+3) % wall.length].put();
+            wall[i][(i+4) % wall.length].put();
         }
 
         int points = scoringRule.calculatePoints(wall);
@@ -56,8 +56,8 @@ public class FullColorRuleTest extends ScoreRulesTest {
     @Test
     public void testCalculatePointsWithNonCompleteDiagonal1() {
 
-        wall[0][0] = Optional.of(tiles[0]);
-        wall[1][1] = Optional.of(tiles[1]);
+        wall[0][0].put();
+        wall[1][1].put();
 
         int points = scoringRule.calculatePoints(wall);
 
@@ -67,8 +67,8 @@ public class FullColorRuleTest extends ScoreRulesTest {
     @Test
     public void testCalculatePointsWithNonCompleteDiagonal2() {
 
-        for(int i = 0; i < tiles.length; i+=2){
-            wall[i][i] = Optional.of(tiles[(i + 2) % tiles.length]);
+        for(int i = 0; i < wall.length; i+=2){
+            wall[i][i].put();
         }
 
         int points = scoringRule.calculatePoints(wall);

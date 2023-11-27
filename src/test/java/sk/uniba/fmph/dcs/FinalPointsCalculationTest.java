@@ -9,8 +9,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FinalPointsCalculationTest {
     private CompositePointsCalculation compositePointsCalculation;
-    private Tile[] tiles;
-    private Optional<Tile>[][] wall;
+    private int colours = Tile.values().length - 1;
+    private TileField[][] wall;
 
     @BeforeEach
     public void setUp() {
@@ -23,26 +23,14 @@ public class FinalPointsCalculationTest {
         compositePointsCalculation.addRule(verticalLineRule);
         compositePointsCalculation.addRule(fullColorRule);
 
-        initializeTiles();
         initializeWall();
     }
 
-    private void initializeTiles() {
-        tiles = new Tile[Tile.values().length - 1];
-        int i = 0;
-        for (Tile tile : Tile.values()) {
-            if (tile != Tile.STARTING_PLAYER) {
-                tiles[i] = tile;
-                i++;
-            }
-        }
-    }
-
-    private void initializeWall() {
-        wall = new Optional[tiles.length][tiles.length];
-        for(int j = 0; j < tiles.length; j++){
-            for(int k = 0; k < tiles.length; k++){
-                wall[j][k] = Optional.empty();
+    public void initializeWall() {
+        wall = new TileField[colours][colours];
+        for(int i = 0; i < wall.length; i++){
+            for(int j = 0; j < wall.length; j++){
+                wall[i][j] = new TileField(Tile.values()[1 + ((i+colours-j) % colours)]);
             }
         }
     }
@@ -50,13 +38,13 @@ public class FinalPointsCalculationTest {
     @Test
     public void testGetPointsWithCompleteHorizontalLine() {
         // Set up a wall with a complete horizontal line
-        wall[0][1] = Optional.of(tiles[0]);
-        wall[0][4] = Optional.of(tiles[4]);
-        for (int i = 0; i < tiles.length; i++) {
-            wall[1][i] = Optional.of(tiles[(i + 1) % tiles.length]);
+        wall[0][1].put();
+        wall[0][4].put();
+        for (int i = 0; i < wall.length; i++) {
+            wall[1][i].put();
         }
-        wall[2][0] = Optional.of(tiles[0]);
-        wall[3][1] = Optional.of(tiles[1]);
+        wall[2][0].put();
+        wall[3][1].put();
 
         Points points = FinalPointsCalculation.getPoints(wall);
 
@@ -67,11 +55,11 @@ public class FinalPointsCalculationTest {
     @Test
     public void testGetPointsWithCompleteVerticalLine() {
         // Set up a wall with a complete vertical line
-        wall[0][0] = Optional.of(tiles[2]);
-        wall[1][0] = Optional.of(tiles[0]);
-        wall[2][0] = Optional.of(tiles[1]);
-        wall[3][0] = Optional.of(tiles[3]);
-        wall[4][0] = Optional.of(tiles[4]);
+        wall[0][0].put();
+        wall[1][0].put();
+        wall[2][0].put();
+        wall[3][0].put();
+        wall[4][0].put();
 
         Points points = FinalPointsCalculation.getPoints(wall);
 
@@ -82,11 +70,11 @@ public class FinalPointsCalculationTest {
     @Test
     public void testGetPointsWithCompleteFullColorRule() {
         // Set up a wall with all tiles filled
-        wall[0][0] = Optional.of(tiles[0]);
-        wall[1][1] = Optional.of(tiles[0]);
-        wall[2][2] = Optional.of(tiles[0]);
-        wall[3][3] = Optional.of(tiles[0]);
-        wall[4][4] = Optional.of(tiles[0]);
+        wall[0][0].put();
+        wall[1][1].put();
+        wall[2][2].put();
+        wall[3][3].put();
+        wall[4][4].put();
 
 
         Points points = FinalPointsCalculation.getPoints(wall);

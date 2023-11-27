@@ -4,21 +4,18 @@ import java.util.Optional;
 
 public class HorizontalLineRule implements ScoringRule{
     @Override
-    public int calculatePoints(Optional<Tile>[][] wall){
-        int sum = 0;
-        boolean complete = true;
-        for(int i = 0; i < wall.length; i++){
-            for(int j = 0; j < wall[i].length; j++){
-                if(!wall[i][j].isPresent()){
-                    complete = false;
+    public int calculatePoints(TileField[][] wall){
+        int points = 0;
+        for (TileField[] wallLine : wall) {
+            boolean fullLine = true;
+            for (TileField field : wallLine)
+                if (field.isEmpty()) {
+                    fullLine = false;
                     break;
                 }
-            }
-            if(complete){
-                sum += EndGameScoringConstants.HORIZONTAL_LINE_POINTS;
-            }
-            complete = true;
+            if (fullLine)
+                points += EndGameScoringConstants.HORIZONTAL_LINE_POINTS;
         }
-        return sum;
+        return points;
     }
 }

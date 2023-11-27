@@ -8,23 +8,24 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GameFinishedTest {
-    private Optional<Tile>[][] wall;
+    private TileField[][] wall;
+    private int colours = Tile.values().length - 1;
 
     @BeforeEach
     public void setUp() {
-        wall = new Optional[Tile.values().length - 1][Tile.values().length - 1];
+        wall = new TileField[colours][colours];
 
         for (int i = 0; i < wall.length; i++) {
             for (int j = 0; j < wall[i].length; j++) {
-                wall[i][j] = Optional.empty();
+                wall[i][j] = new TileField(Tile.values()[1 + ((i+colours-j) % colours)]);
             }
         }
     }
 
     @Test
     public void testGameFinishedWithCompleteHorizontalLine() {
-        for (int i = 0; i < Tile.values().length - 1; i++) {
-            wall[0][i] = Optional.of(Tile.values()[i]);
+        for (int i = 0; i < wall[0].length; i++) {
+            wall[0][i].put();
         }
 
         FinishRoundResult result = GameFinished.gameFinished(wall);
@@ -34,8 +35,8 @@ public class GameFinishedTest {
 
     @Test
     public void testGameFinishedWithIncompleteHorizontalLine() {
-        wall[0][0] = Optional.of(Tile.values()[0]);
-        wall[0][1] = Optional.of(Tile.values()[1]);
+        wall[0][0].put();
+        wall[0][1].put();
 
         FinishRoundResult result = GameFinished.gameFinished(wall);
         assertEquals(FinishRoundResult.NORMAL, result);
