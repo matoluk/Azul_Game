@@ -73,7 +73,10 @@ public class PatternLine implements PatternLineInterface{
     public String state() {
         StringBuilder toReturn = new StringBuilder();
         for (Tile tile : patternLine)
-            toReturn.append("["+tile+"]");
+            if (tile == null)
+                toReturn.append("_");
+            else
+                toReturn.append(tile);
         return toReturn.toString();
     }
 }
