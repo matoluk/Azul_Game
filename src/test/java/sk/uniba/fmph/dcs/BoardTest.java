@@ -49,7 +49,7 @@ class FakeFloor implements FloorInterface{
         return "floor";
     }
     public Points finishRound() {
-        return new Points(2);
+        return new Points(-2);
     }
 }
 public class BoardTest {

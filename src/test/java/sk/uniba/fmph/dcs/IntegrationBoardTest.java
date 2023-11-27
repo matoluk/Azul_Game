@@ -39,5 +39,87 @@ public class IntegrationBoardTest {
                 "_   | rbi\n" +
                 "__  | irb\n" +
                 "___ | bir\n", board.state());
+        board.put(0, new Tile[]{Tile.BLUE, Tile.BLUE});
+        assertEquals("Points [value=0]\n" +
+                "B   | rbi\n" +
+                "__  | irb\n" +
+                "___ | bir\nB", board.state());
+        board.put(2, new Tile[]{Tile.RED});
+        assertEquals("Points [value=0]\n" +
+                "B   | rbi\n" +
+                "__  | irb\n" +
+                "R__ | bir\nB", board.state());
+        board.put(2, new Tile[]{Tile.BLUE});
+        assertEquals("Points [value=0]\n" +
+                "B   | rbi\n" +
+                "__  | irb\n" +
+                "R__ | bir\nBB", board.state());
+        board.put(1, new Tile[]{Tile.RED, Tile.STARTING_PLAYER, Tile.RED});
+        assertEquals("Points [value=0]\n" +
+                "B   | rbi\n" +
+                "RR  | irb\n" +
+                "R__ | bir\nBBS", board.state());
+        assertEquals(FinishRoundResult.NORMAL, board.finishRound());
+        assertEquals("Points [value=-3]\n" +
+                "_   | rBi\n" +
+                "__  | iRb\n" +
+                "R__ | bir\n", board.state());
+        board.put(2, new Tile[]{Tile.RED, Tile.RED, Tile.RED});
+        assertEquals("Points [value=-3]\n" +
+                "_   | rBi\n" +
+                "__  | iRb\n" +
+                "RRR | bir\nR", board.state());
+        board.put(0, new Tile[]{Tile.RED});
+        assertEquals("Points [value=-3]\n" +
+                "R   | rBi\n" +
+                "__  | iRb\n" +
+                "RRR | bir\nR", board.state());
+        assertEquals(FinishRoundResult.NORMAL, board.finishRound());
+        assertEquals("Points [value=-1]\n" +
+                "_   | RBi\n" +
+                "__  | iRb\n" +
+                "___ | biR\n", board.state());
+        board.put(2, new Tile[]{Tile.YELLOW, Tile.YELLOW, Tile.YELLOW, Tile.YELLOW, Tile.YELLOW});
+        board.put(0, new Tile[]{Tile.STARTING_PLAYER, Tile.YELLOW});
+        assertEquals("Points [value=-1]\n" +
+                "I   | RBi\n" +
+                "__  | iRb\n" +
+                "III | biR\nIIS", board.state());
+        assertEquals(FinishRoundResult.GAME_FINISHED, board.finishRound());
+        assertEquals("Points [value=1]\n" +
+                "_   | RBI\n" +
+                "__  | iRb\n" +
+                "___ | bIR\n", board.state());
+        board.endGame();
+        assertEquals("Points [value=20]\n" +
+                "_   | RBI\n" +
+                "__  | iRb\n" +
+                "___ | bIR\n", board.state());
+        assertEquals(20, board.getPoints().getValue());
+    }
+    @Test
+    public void test_putMoreColors(){
+        assertThrows(AssertionError.class, () -> {
+            board.put(1, new Tile[]{Tile.RED, Tile.YELLOW});
+        });
+    }
+    @Test
+    public void test_cantPutColor(){
+        board.put(1, new Tile[]{Tile.YELLOW, Tile.YELLOW});
+        assertEquals(FinishRoundResult.NORMAL, board.finishRound());
+        assertEquals("Points [value=1]\n" +
+                "_   | rbi\n" +
+                "__  | Irb\n" +
+                "___ | bir\n", board.state());
+        board.put(1, new Tile[]{Tile.YELLOW});
+        assertEquals("Points [value=1]\n" +
+                "_   | rbi\n" +
+                "__  | Irb\n" +
+                "___ | bir\nI", board.state());
+        board.put(0, new Tile[]{Tile.GREEN});
+        assertEquals("Points [value=1]\n" +
+                "_   | rbi\n" +
+                "__  | Irb\n" +
+                "___ | bir\nIG", board.state());
     }
 }
