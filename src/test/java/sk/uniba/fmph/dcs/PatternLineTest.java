@@ -4,8 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Optional;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -26,51 +25,31 @@ class FakeWallLinePut implements WallLineInterface{
         return null;
     }
 }
-class FakeFloorPut implements FloorInterface{
-    public ArrayList<Tile> tiles = new ArrayList<>();
-    public void put(Collection<Tile> tiles) {
-        this.tiles.addAll(tiles);
-    }
-    public String state() {
-        return null;
-    }
-    public Points finishRound() {
-        return null;
-    }
-}
-class FakeUsedTilesGive implements UsedTilesGiveInterface {
-    public ArrayList<Tile> tiles = new ArrayList<>();
-    public void give(Collection<Tile> t) {
-        tiles.addAll(t);
-    }
-}
 
 public class PatternLineTest {
     private FakeWallLinePut wallLine;
-    private FakeFloorPut floor;
-    private FakeUsedTilesGive usedTiles;
+    private Floor floor;
+    private FakeUsedTiles usedTiles;
     private PatternLine patternLine;
     @BeforeEach
     public void setUp() {
         wallLine = new FakeWallLinePut();
-        floor = new FakeFloorPut();
-        usedTiles = new FakeUsedTilesGive();
+        usedTiles = new FakeUsedTiles();
+        floor = new Floor(usedTiles, new ArrayList<>(Arrays.asList(new Points(-1), new Points(-1), new Points(-2))));
         patternLine = new PatternLine(3, wallLine, usedTiles, floor);
     }
     @Test
     public void test_main(){
         Tile[] tiles = {Tile.RED, Tile.RED, Tile.STARTING_PLAYER};
         patternLine.put(tiles);
-        assertEquals(1, floor.tiles.size(), "Floor should contains exactly 1 Tile");
-        assertEquals(Tile.STARTING_PLAYER, floor.tiles.get(0), "Floor should contains Tile.STARTING_PLAYER");
+        assertEquals("S", floor.state());
         Points points = patternLine.finishRound();
         assertEquals(0, points.getValue(), "PatternLine is not full, should returns 0 points");
         assertEquals(0, usedTiles.tiles.size(), "UsedTiles should be empty");
 
         tiles = new Tile[] {Tile.RED, Tile.RED};
         patternLine.put(tiles);
-        assertEquals(2, floor.tiles.size(), "Floor should contains exactly 2 Tiles");
-        assertEquals(Tile.RED, floor.tiles.get(1), "Floor[1] should be RED");
+        assertEquals("SR", floor.state());
         points = patternLine.finishRound();
         assertEquals(7, points.getValue(), "PatternLine is full, should returns 7 points");
         assertEquals(2, usedTiles.tiles.size(), "UsedTiles should contains 2 Tiles");
@@ -81,9 +60,7 @@ public class PatternLineTest {
     public void test_blue(){
         Tile[] tiles = {Tile.BLUE, Tile.BLUE, Tile.BLUE, Tile.BLUE, Tile.BLUE};
         patternLine.put(tiles);
-        assertEquals(2, floor.tiles.size(), "Floor should contains exactly 2 Tiles");
-        assertEquals(Tile.BLUE, floor.tiles.get(1), "Floor[0] should be BLUE");
-        assertEquals(Tile.BLUE, floor.tiles.get(1), "Floor[1] should be BLUE");
+        assertEquals("BB", floor.state());
         Points points = patternLine.finishRound();
         assertEquals(3, points.getValue(), "PatternLine is full, should returns 3 points");
     }
@@ -109,19 +86,17 @@ public class PatternLineTest {
     public void test_putDifferentColors() {
         patternLine.put(new Tile[] {Tile.BLUE});
         patternLine.put(new Tile[] {Tile.RED});
-        assertEquals(1, floor.tiles.size(), "Floor should contains exactly 1 Tile");
-        assertEquals(Tile.RED, floor.tiles.get(0), "Floor should contains Tile.RED");
+        assertEquals("R", floor.state());
 
         patternLine.put(new Tile[] {Tile.BLUE, Tile.BLUE});
-        assertEquals(1, floor.tiles.size(), "Floor should contains 1 Tile");
+        assertEquals("R", floor.state());
     }
     @Test
     public void test_wallLineCantPut() {
         patternLine.put(new Tile[] {Tile.YELLOW});
-        assertEquals(1, floor.tiles.size(), "Floor should contains exactly 1 Tile");
-        assertEquals(Tile.YELLOW, floor.tiles.get(0), "Floor should contains YELLOW");
+        assertEquals("I", floor.state());
 
         patternLine.put(new Tile[] {Tile.BLUE, Tile.BLUE, Tile.BLUE});
-        assertEquals(1, floor.tiles.size(), "Floor should contains 1 Tile");
+        assertEquals("I", floor.state());
     }
 }

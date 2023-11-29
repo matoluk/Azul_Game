@@ -1,7 +1,6 @@
 package sk.uniba.fmph.dcs;
 
 import java.util.List;
-import java.util.Optional;
 
 public class Board implements BoardInterface{
     private Points points;

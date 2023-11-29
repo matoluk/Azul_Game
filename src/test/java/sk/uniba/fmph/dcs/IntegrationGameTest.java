@@ -1472,5 +1472,11 @@ public class IntegrationGameTest {
         assertEquals("Player0: 61 points", state.get(6));
         assertEquals("Player1: 103 points", state.get(7));
         assertEquals("Player1 wins", state.get(8));
+
+        List<Tile> used = usedTiles.takeAll();
+        assertEquals(100, bag.state().length() + used.size() + 18 + 21);
+        usedTiles.give(used);
+
+        assertEquals("\n\n\n\n\n\n", tableArea.state());
     }
 }
