@@ -1232,5 +1232,245 @@ public class IntegrationGameTest {
                 "IRLB\n" +
                 "S\n", state.get(6));
         assertEquals("Starts player 0", state.get(7));
+
+        game.take(0, 1, Tile.RED.ordinal(), 0);
+        state = observer.getStates();
+        assertEquals(3, state.size());
+        assertEquals("TableArea:\n" +
+                "GRRG\n" +
+                "\n" +
+                "GGIL\n" +
+                "IRGL\n" +
+                "IRLB\n" +
+                "SIGB\n", state.get(0));
+        assertEquals("Player0's Board:\n" +
+                "Points [value=27]\n" +
+                "R     | rGIBL\n" +
+                "__    | lRgIB\n" +
+                "RR_   | bLrgI\n" +
+                "LL__  | iBlrG\n" +
+                "_____ | gIblR\n" +
+                "", state.get(1));
+        assertEquals("Current player 1", state.get(2));
+
+        game.take(1, 2, Tile.GREEN.ordinal(), 2);
+        state = observer.getStates();
+        assertEquals(3, state.size());
+        assertEquals("TableArea:\n" +
+                "GRRG\n" +
+                "\n" +
+                "\n" +
+                "IRGL\n" +
+                "IRLB\n" +
+                "SIGBIL\n", state.get(0));
+        assertEquals("Player1's Board:\n" +
+                "Points [value=44]\n" +
+                "_     | rGIBL\n" +
+                "__    | LRGIb\n" +
+                "GG_   | BLRgI\n" +
+                "____  | ibLrG\n" +
+                "_____ | giBLR\n" +
+                "", state.get(1));
+        assertEquals("Current player 0", state.get(2));
+
+        game.take(0, 0, Tile.GREEN.ordinal(), 1);
+        state = observer.getStates();
+        assertEquals(3, state.size());
+        assertEquals("TableArea:\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "IRGL\n" +
+                "IRLB\n" +
+                "SIGBILRR\n", state.get(0));
+        assertEquals("Player0's Board:\n" +
+                "Points [value=27]\n" +
+                "R     | rGIBL\n" +
+                "GG    | lRgIB\n" +
+                "RR_   | bLrgI\n" +
+                "LL__  | iBlrG\n" +
+                "_____ | gIblR\n" +
+                "", state.get(1));
+        assertEquals("Current player 1", state.get(2));
+
+        game.take(1, 4, Tile.RED.ordinal(), 0);
+        state = observer.getStates();
+        assertEquals(3, state.size());
+        assertEquals("TableArea:\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "IRGL\n" +
+                "\n" +
+                "SIGBILRRILB\n", state.get(0));
+        assertEquals("Player1's Board:\n" +
+                "Points [value=44]\n" +
+                "R     | rGIBL\n" +
+                "__    | LRGIb\n" +
+                "GG_   | BLRgI\n" +
+                "____  | ibLrG\n" +
+                "_____ | giBLR\n" +
+                "", state.get(1));
+        assertEquals("Current player 0", state.get(2));
+
+        game.take(0, 5, Tile.BLACK.ordinal(), 3);
+        state = observer.getStates();
+        assertEquals(3, state.size());
+        assertEquals("TableArea:\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "IRGL\n" +
+                "\n" +
+                "IGBIRRIB\n", state.get(0));
+        assertEquals("Player0's Board:\n" +
+                "Points [value=27]\n" +
+                "R     | rGIBL\n" +
+                "GG    | lRgIB\n" +
+                "RR_   | bLrgI\n" +
+                "LLLL  | iBlrG\n" +
+                "_____ | gIblR\n" +
+                "S", state.get(1));
+        assertEquals("Current player 1", state.get(2));
+
+        game.take(1, 5, Tile.BLUE.ordinal(), 1);
+        state = observer.getStates();
+        assertEquals(3, state.size());
+        assertEquals("TableArea:\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "IRGL\n" +
+                "\n" +
+                "IGIRRI\n", state.get(0));
+        assertEquals("Player1's Board:\n" +
+                "Points [value=44]\n" +
+                "R     | rGIBL\n" +
+                "BB    | LRGIb\n" +
+                "GG_   | BLRgI\n" +
+                "____  | ibLrG\n" +
+                "_____ | giBLR\n" +
+                "", state.get(1));
+        assertEquals("Current player 0", state.get(2));
+
+        game.take(0, 3, Tile.RED.ordinal(), 2);
+        state = observer.getStates();
+        assertEquals(3, state.size());
+        assertEquals("TableArea:\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "IGIRRIIGL\n", state.get(0));
+        assertEquals("Player0's Board:\n" +
+                "Points [value=27]\n" +
+                "R     | rGIBL\n" +
+                "GG    | lRgIB\n" +
+                "RRR   | bLrgI\n" +
+                "LLLL  | iBlrG\n" +
+                "_____ | gIblR\n" +
+                "S", state.get(1));
+        assertEquals("Current player 1", state.get(2));
+
+        game.take(1, 5, Tile.GREEN.ordinal(), 2);
+        state = observer.getStates();
+        assertEquals(3, state.size());
+        assertEquals("TableArea:\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "IIRRIIL\n", state.get(0));
+        assertEquals("Player1's Board:\n" +
+                "Points [value=44]\n" +
+                "R     | rGIBL\n" +
+                "BB    | LRGIb\n" +
+                "GGG   | BLRgI\n" +
+                "____  | ibLrG\n" +
+                "_____ | giBLR\n" +
+                "G", state.get(1));
+        assertEquals("Current player 0", state.get(2));
+
+        game.take(0, 5, Tile.BLACK.ordinal(), 4);
+        state = observer.getStates();
+        assertEquals(3, state.size());
+        assertEquals("TableArea:\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "IIRRII\n", state.get(0));
+        assertEquals("Player0's Board:\n" +
+                "Points [value=27]\n" +
+                "R     | rGIBL\n" +
+                "GG    | lRgIB\n" +
+                "RRR   | bLrgI\n" +
+                "LLLL  | iBlrG\n" +
+                "L____ | gIblR\n" +
+                "S", state.get(1));
+        assertEquals("Current player 1", state.get(2));
+
+        game.take(1, 5, Tile.YELLOW.ordinal(), 3);
+        state = observer.getStates();
+        assertEquals(3, state.size());
+        assertEquals("TableArea:\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "RR\n", state.get(0));
+        assertEquals("Player1's Board:\n" +
+                "Points [value=44]\n" +
+                "R     | rGIBL\n" +
+                "BB    | LRGIb\n" +
+                "GGG   | BLRgI\n" +
+                "IIII  | ibLrG\n" +
+                "_____ | giBLR\n" +
+                "G", state.get(1));
+        assertEquals("Current player 0", state.get(2));
+
+        game.take(0, 5, Tile.RED.ordinal(), 5);
+        state = observer.getStates();
+        assertEquals(9, state.size());
+        assertEquals("TableArea:\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "\n", state.get(0));
+        assertEquals("Player0's Board:\n" +
+                "Points [value=27]\n" +
+                "R     | rGIBL\n" +
+                "GG    | lRgIB\n" +
+                "RRR   | bLrgI\n" +
+                "LLLL  | iBlrG\n" +
+                "L____ | gIblR\n" +
+                "SRR", state.get(1));
+        assertEquals("Round ended", state.get(2));
+        assertEquals("Player0's Board:\n" +
+                "Points [value=45]\n" +
+                "_     | RGIBL\n" +
+                "__    | lRGIB\n" +
+                "___   | bLRgI\n" +
+                "____  | iBLrG\n" +
+                "L____ | gIblR\n" +
+                "", state.get(3));
+        assertEquals("Player1's Board:\n" +
+                "Points [value=73]\n" +
+                "_     | RGIBL\n" +
+                "__    | LRGIB\n" +
+                "___   | BLRGI\n" +
+                "____  | IbLrG\n" +
+                "_____ | giBLR\n" +
+                "", state.get(4));
+        assertEquals("Game ended", state.get(5));
+        assertEquals("Player0: 61 points", state.get(6));
+        assertEquals("Player1: 103 points", state.get(7));
+        assertEquals("Player1 wins", state.get(8));
     }
 }
